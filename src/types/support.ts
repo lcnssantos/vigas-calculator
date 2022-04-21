@@ -27,18 +27,8 @@ export class EmbedSupport implements Support {
     this.type = SupportType.EMBED;
     this.position = position;
     this.forces = [
-      {
-        id: this.id + "y",
-        angle: 180,
-        position: position,
-        intensity: undefined,
-      },
-      {
-        id: this.id + "x",
-        angle: 90,
-        position: position,
-        intensity: undefined,
-      },
+      new Force(this.id + "y", undefined, 180, position),
+      new Force(this.id + "x", undefined, 90, position),
     ];
     this.moment = {
       value: 0,
@@ -60,18 +50,8 @@ export class DoubleSupport implements Support {
     this.type = SupportType.DOUBLE;
     this.position = position;
     this.forces = [
-      {
-        id: this.id + "y",
-        angle: 180,
-        position: position,
-        intensity: undefined,
-      },
-      {
-        id: this.id + "x",
-        angle: 90,
-        position: position,
-        intensity: undefined,
-      },
+      new Force(this.id + "y", undefined, 180, position),
+      new Force(this.id + "x", undefined, 90, position),
     ];
   }
 }
@@ -87,13 +67,6 @@ export class SimpleSupport implements Support {
     this.id = id;
     this.type = SupportType.SIMPLE;
     this.position = position;
-    this.forces = [
-      {
-        id: this.id + "y",
-        angle: 180,
-        position: position,
-        intensity: undefined,
-      },
-    ];
+    this.forces = [new Force(this.id + "y", undefined, 180, position)];
   }
 }

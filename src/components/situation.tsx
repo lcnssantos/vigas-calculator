@@ -8,12 +8,12 @@ import { Moment } from "../types/moment";
 import { Text } from "../types/text";
 import { Canvas } from "./canvas";
 import {
-  getBaseLines,
-  getForceLines,
-  getLoadLines,
-  getMoment,
-  getScale,
-  getSupportLines,
+  getBaseData,
+  getForceData,
+  getLoadData,
+  getMomentData,
+  getScaleValue,
+  getSupportData,
 } from "./utils/ui";
 
 export const Situation = () => {
@@ -27,21 +27,21 @@ export const Situation = () => {
 
   const processForces = (forces: Array<Force>, color = "black") => {
     const lines = forces
-      .map((force) => getForceLines(force, length, color).lines)
+      .map((force) => getForceData(force, length, color).lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     const texts = forces.map(
-      (force) => getForceLines(force, length, color).text
+      (force) => getForceData(force, length, color).text
     );
 
     return { lines, texts };
   };
 
   const processMoments = (moments: Array<Moment>, color = "black") => {
-    const arcs = moments.map((m) => getMoment(m, length).arc);
-    const texts = moments.map((m) => getMoment(m, length).text);
+    const arcs = moments.map((m) => getMomentData(m, length).arc);
+    const texts = moments.map((m) => getMomentData(m, length).text);
     const lines = moments
-      .map((m) => getMoment(m, length).lines)
+      .map((m) => getMomentData(m, length).lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     return {
@@ -52,20 +52,20 @@ export const Situation = () => {
   };
 
   const processBase = () => {
-    return getBaseLines(length, getScale(length));
+    return getBaseData(length, getScaleValue(length));
   };
 
   const processSupports = () => {
     const lines = supports
-      .map((support) => getSupportLines(support, length, "purple").lines)
+      .map((support) => getSupportData(support, length, "purple").lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     const texts = supports.map(
-      (support) => getSupportLines(support, length, "purple").text
+      (support) => getSupportData(support, length, "purple").text
     );
 
     const circles = supports
-      .map((support) => getSupportLines(support, length, "purple").circles)
+      .map((support) => getSupportData(support, length, "purple").circles)
       .reduce((out, circles) => [...out, ...circles], []);
 
     return { lines, texts, circles };
@@ -80,11 +80,11 @@ export const Situation = () => {
 
   const processLoads = () => {
     const lines = loads
-      .map((load) => getLoadLines(load, length).lines)
+      .map((load) => getLoadData(load, length).lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     const texts = loads
-      .map((load) => getLoadLines(load, length).texts)
+      .map((load) => getLoadData(load, length).texts)
       .reduce((out, texts) => [...out, ...texts], []);
 
     return { lines, texts };

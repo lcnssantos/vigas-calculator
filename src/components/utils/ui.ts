@@ -9,12 +9,46 @@ import { Support, SupportType } from "../../types/support";
 import { Text } from "../../types/text";
 import { Calc } from "./math";
 
-export const getScale = (length: number) => {
+export const getScaleValue = (length: number) => {
   const width = CANVAS.WIDTH * 0.9;
   return width / length;
 };
 
-export const getEquilateralTriangleLines = (
+export const getArrowData = (
+  position: [number, number],
+  length: number,
+  angle: number,
+  color = "black",
+  width = 2
+): Array<Line> => {
+  const newAngle = -(angle + 90);
+
+  return [
+    {
+      firstPoint: position,
+      size: length,
+      angle: newAngle,
+      color,
+      width,
+    },
+    {
+      firstPoint: position,
+      size: length / 10,
+      angle: newAngle + 45,
+      color,
+      width,
+    },
+    {
+      firstPoint: position,
+      size: length / 10,
+      angle: newAngle - 45,
+      color,
+      width,
+    },
+  ];
+};
+
+export const getEquilateralTriangleData = (
   size: number,
   topPosition: [number, number],
   color: string,
@@ -51,13 +85,13 @@ export const getEquilateralTriangleLines = (
   ];
 };
 
-export const getSupportLines = (
+export const getSupportData = (
   support: Support,
   baseLength: number,
   color = "black",
   width = 2
 ) => {
-  const scale = getScale(baseLength);
+  const scale = getScaleValue(baseLength);
   const LENGTH = CANVAS.HEIGHT / 40;
   const CENTER = CANVAS.WIDTH / 2 - (baseLength / 2 - support.position) * scale;
 
@@ -81,7 +115,7 @@ export const getSupportLines = (
 
   const getDoubleSupportSymbol = () => {
     const lines = [
-      ...getEquilateralTriangleLines(
+      ...getEquilateralTriangleData(
         LENGTH,
         [CENTER, CANVAS.HEIGHT / 2 + scale],
         color,
@@ -126,74 +160,18 @@ export const getSupportLines = (
   };
 };
 
-export const drawText = (
-  context: CanvasRenderingContext2D,
-  { content, position, color }: Text
-) => {
-  context.font = "16px Arial";
-  context.fillStyle = color;
-  context.fillText(content, position[0], position[1]);
-};
-
-export const drawLine = (
-  context: CanvasRenderingContext2D,
-  { firstPoint, size, angle = 0, color = "black", width = 2 }: Line
-) => {
-  const { cos, sin } = Calc.getCosSinTan(angle);
-
-  const finalPoint = [firstPoint[0] + size * cos, firstPoint[1] + size * sin];
-
-  context.beginPath();
-  context.strokeStyle = color;
-  context.moveTo(firstPoint[0], firstPoint[1]);
-  context.lineTo(finalPoint[0], finalPoint[1]);
-  context.lineWidth = width;
-  context.stroke();
-};
-
-export const drawCircle = (
-  context: CanvasRenderingContext2D,
-  { center, radius, color, width }: Circle
-) => {
-  context.beginPath();
-  context.arc(center[0], center[1], radius, 0, 2 * Math.PI);
-  context.strokeStyle = color;
-  context.lineWidth = width;
-  context.stroke();
-};
-
-export const drawArc = (
-  context: CanvasRenderingContext2D,
-  { center, radius, color, width, endAngle, startAngle, direction }: Arc
-) => {
-  context.beginPath();
-  context.arc(
-    center[0],
-    center[1],
-    radius,
-    Calc.degToRad(startAngle),
-    Calc.degToRad(endAngle),
-    direction === ArcDirection.COUNTER_CLOCK_WISE
-  );
-  context.strokeStyle = color;
-  context.lineWidth = width;
-  context.stroke();
-};
-
-export const getForceLines = (
+export const getForceData = (
   force: Force,
   baseLength: number,
   color = "blue"
 ) => {
-  const scale = getScale(baseLength);
+  const scale = getScaleValue(baseLength);
   const position: [number, number] = [
     CANVAS.WIDTH / 2 - (baseLength / 2 - force.position) * scale,
     CANVAS.HEIGHT / 2,
   ];
 
   const LENGTH = CANVAS.HEIGHT / 15;
-  const ARROW_LENGTH = LENGTH / 10;
-  const newAngle = -(force.angle + 90);
 
   const { cos, sin } = Calc.getCosSinTan(force.angle);
 
@@ -206,29 +184,13 @@ export const getForceLines = (
     color,
   };
 
-  const lines: Array<Line> = [
-    {
-      firstPoint: position,
-      size: LENGTH,
-      angle: newAngle,
-      color: color,
-      width: 4,
-    },
-    {
-      firstPoint: position,
-      size: ARROW_LENGTH,
-      angle: newAngle + 45,
-      color: color,
-      width: 4,
-    },
-    {
-      firstPoint: position,
-      size: -ARROW_LENGTH,
-      angle: newAngle + 135,
-      color: color,
-      width: 4,
-    },
-  ];
+  const lines: Array<Line> = getArrowData(
+    position,
+    LENGTH,
+    force.angle,
+    color,
+    4
+  );
 
   return {
     lines,
@@ -236,7 +198,7 @@ export const getForceLines = (
   };
 };
 
-export const getRectangleLines = (
+export const getRectangleData = (
   topLeft: [number, number],
   width: number,
   height: number,
@@ -275,9 +237,9 @@ export const getRectangleLines = (
   };
 };
 
-export const getBaseLines = (length: number, scale: number) => {
+export const getBaseData = (length: number, scale: number) => {
   const marginLeft = CANVAS.WIDTH * 0.05;
-  const { lines } = getRectangleLines(
+  const { lines } = getRectangleData(
     [marginLeft, CANVAS.HEIGHT / 2 + scale],
     scale * length,
     scale,
@@ -286,44 +248,10 @@ export const getBaseLines = (length: number, scale: number) => {
   return lines;
 };
 
-export const getLoadLines = (load: Load, baseLength: number) => {
-  const scale = getScale(baseLength);
+export const getLoadData = (load: Load, baseLength: number) => {
+  const scale = getScaleValue(baseLength);
   const CENTER =
     CANVAS.WIDTH / 2 - (baseLength / 2 - load.initialPosition) * scale;
-
-  const getArrowLine = (
-    position: [number, number],
-    length: number,
-    angle: number,
-    color = "black",
-    width = 2
-  ): Array<Line> => {
-    const newAngle = -(angle + 90);
-
-    return [
-      {
-        firstPoint: position,
-        size: length,
-        angle: newAngle,
-        color,
-        width,
-      },
-      {
-        firstPoint: position,
-        size: length / 10,
-        angle: newAngle + 45,
-        color,
-        width,
-      },
-      {
-        firstPoint: position,
-        size: length / 10,
-        angle: newAngle - 45,
-        color,
-        width,
-      },
-    ];
-  };
 
   const QUANTITY = Math.round((load.finalPosition - load.initialPosition) / 10);
 
@@ -351,7 +279,7 @@ export const getLoadLines = (load: Load, baseLength: number) => {
     ...new Array(QUANTITY + 1)
       .fill("a")
       .map((_, index) =>
-        getArrowLine(
+        getArrowData(
           [
             CENTER + (POSITION_INTERVAL * scale * index) / QUANTITY,
             CANVAS.HEIGHT / 2,
@@ -389,8 +317,8 @@ export const getLoadLines = (load: Load, baseLength: number) => {
   };
 };
 
-export const getMoment = (moment: Moment, baseLength: number) => {
-  const scale = getScale(baseLength);
+export const getMomentData = (moment: Moment, baseLength: number) => {
+  const scale = getScaleValue(baseLength);
   const CENTER = CANVAS.WIDTH / 2 - (baseLength / 2 - moment.position) * scale;
   const RADIUS = 20;
 

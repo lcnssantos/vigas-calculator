@@ -4,7 +4,7 @@ import { Arc } from "../types/arc";
 import { Circle } from "../types/circle";
 import { Line } from "../types/line";
 import { Text } from "../types/text";
-import { drawArc, drawCircle, drawLine, drawText } from "./utils/ui";
+import { drawArc, drawCircle, drawLine, drawText } from "./utils/draw";
 
 interface CanvasProps {
   lines: Array<Line>;

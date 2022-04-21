@@ -367,7 +367,7 @@ export const getLoadLines = (load: Load, baseLength: number) => {
   const texts: Array<Text> = [
     {
       color: "black",
-      content: load.finalValue + "kNm",
+      content: load.finalValue + "kN/m",
       position: [
         CENTER + load.finalPosition * scale,
         CANVAS.HEIGHT / 2 - load.finalValue * VERTICAL_SCALE,
@@ -375,7 +375,7 @@ export const getLoadLines = (load: Load, baseLength: number) => {
     },
     {
       color: "black",
-      content: load.initialValue + "kNm",
+      content: load.initialValue + "kN/m",
       position: [
         CENTER,
         CANVAS.HEIGHT / 2 - 10 - load.initialValue * VERTICAL_SCALE,

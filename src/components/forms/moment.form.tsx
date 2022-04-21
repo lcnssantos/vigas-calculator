@@ -1,16 +1,19 @@
 import { FC } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Load as LoadType } from "../types/load";
 
-interface FormProps extends LoadType {}
+interface FormProps {
+  position: number;
+  value: number;
+  id: string;
+}
 
-interface LoadProps {
+interface MomentProps {
   onSubmit: (props: FormProps) => void;
   enabled: boolean;
 }
 
-export const Load: FC<LoadProps> = ({ onSubmit, enabled }) => {
+export const MomentForm: FC<MomentProps> = ({ onSubmit, enabled }) => {
   const { register, handleSubmit, reset } = useForm<FormProps>();
 
   return (
@@ -21,7 +24,7 @@ export const Load: FC<LoadProps> = ({ onSubmit, enabled }) => {
         reset();
       })}
     >
-      <h6>Carga</h6>
+      <h6>Momento</h6>
       <Form.Control
         type="text"
         placeholder="ID"
@@ -31,33 +34,16 @@ export const Load: FC<LoadProps> = ({ onSubmit, enabled }) => {
       />
       <Form.Control
         type="text"
-        placeholder="Valor inicial (kN)"
+        placeholder="Posição (cm)"
         className="bg-dark w-100 m-1 text-light"
-        {...register("initialValue", { required: true, valueAsNumber: true })}
+        {...register("position", { required: true, valueAsNumber: true })}
         size="sm"
       />
       <Form.Control
         type="text"
-        placeholder="Valor final (kN)"
+        placeholder="Itensidade (kNm)"
         className="bg-dark w-100 m-1 text-light"
-        {...register("finalValue", { required: true, valueAsNumber: true })}
-        size="sm"
-      />
-      <Form.Control
-        type="text"
-        placeholder="Posição Inicial (cm)"
-        className="bg-dark w-100 m-1 text-light"
-        {...register("initialPosition", {
-          required: true,
-          valueAsNumber: true,
-        })}
-        size="sm"
-      />
-      <Form.Control
-        type="text"
-        placeholder="Posição final (cm)"
-        className="bg-dark w-100 m-1 text-light"
-        {...register("finalPosition", { required: true, valueAsNumber: true })}
+        {...register("value", { required: true, valueAsNumber: true })}
         size="sm"
       />
       <Button

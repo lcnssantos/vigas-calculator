@@ -1,20 +1,16 @@
 import { FC } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { Load as LoadType } from "../../types/load";
 
-interface FormProps {
-  position: number;
-  intensity: number;
-  angle: number;
-  id: string;
-}
+interface FormProps extends LoadType {}
 
-interface ForceProps {
+interface LoadProps {
   onSubmit: (props: FormProps) => void;
   enabled: boolean;
 }
 
-export const Force: FC<ForceProps> = ({ onSubmit, enabled }) => {
+export const LoadForm: FC<LoadProps> = ({ onSubmit, enabled }) => {
   const { register, handleSubmit, reset } = useForm<FormProps>();
 
   return (
@@ -25,7 +21,7 @@ export const Force: FC<ForceProps> = ({ onSubmit, enabled }) => {
         reset();
       })}
     >
-      <h6>Força</h6>
+      <h6>Carga</h6>
       <Form.Control
         type="text"
         placeholder="ID"
@@ -35,23 +31,33 @@ export const Force: FC<ForceProps> = ({ onSubmit, enabled }) => {
       />
       <Form.Control
         type="text"
-        placeholder="Posição (cm)"
+        placeholder="Valor inicial (kN)"
         className="bg-dark w-100 m-1 text-light"
-        {...register("position", { required: true, valueAsNumber: true })}
+        {...register("initialValue", { required: true, valueAsNumber: true })}
         size="sm"
       />
       <Form.Control
         type="text"
-        placeholder="Itensidade (kN)"
+        placeholder="Valor final (kN)"
         className="bg-dark w-100 m-1 text-light"
-        {...register("intensity", { required: true, valueAsNumber: true })}
+        {...register("finalValue", { required: true, valueAsNumber: true })}
         size="sm"
       />
       <Form.Control
         type="text"
-        placeholder="Ângulo (graus)"
+        placeholder="Posição Inicial (cm)"
         className="bg-dark w-100 m-1 text-light"
-        {...register("angle", { required: true, valueAsNumber: true })}
+        {...register("initialPosition", {
+          required: true,
+          valueAsNumber: true,
+        })}
+        size="sm"
+      />
+      <Form.Control
+        type="text"
+        placeholder="Posição final (cm)"
+        className="bg-dark w-100 m-1 text-light"
+        {...register("finalPosition", { required: true, valueAsNumber: true })}
         size="sm"
       />
       <Button

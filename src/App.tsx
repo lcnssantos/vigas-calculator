@@ -1,15 +1,15 @@
 import { useContext } from "react";
-import { Bar } from "./components/bar";
-import { Force } from "./components/force";
-import { ForceList } from "./components/force-list";
-import { Load } from "./components/load";
-import { LoadList } from "./components/load-list";
-import { Moment } from "./components/moment";
-import { MomentList } from "./components/moment-list";
+import { BarForm } from "./components/forms/bar.form";
+import { ForceForm } from "./components/forms/force.form";
+import { ForceList } from "./components/list/force.list";
+import { LoadForm } from "./components/forms/load.form";
+import { LoadList } from "./components/list/load.list";
+import { MomentForm } from "./components/forms/moment.form";
+import { MomentList } from "./components/list/moment.list";
 import { Sidebar } from "./components/sidebar";
 import { Situation } from "./components/situation";
-import { Support } from "./components/support";
-import { SupportList } from "./components/support-list";
+import { SupportForm } from "./components/forms/support.form";
+import { SupportList } from "./components/list/support.list";
 import { SituationContext } from "./context/situation.context";
 import { Load as LoadType } from "./types/load";
 
@@ -34,15 +34,15 @@ export const App = () => {
   return (
     <section className="d-flex h-100 vh-100">
       <Sidebar>
-        <Bar onSubmit={(data) => setLength(data.size)} defaultValue={length} />
-        <Support
+        <BarForm onSubmit={(data) => setLength(data.size)} defaultValue={length} />
+        <SupportForm
           onSubmit={(data) => addSupport(data.id, data.position, data.type)}
           enabled={length > 0}
           length={length}
         />
-        <Force onSubmit={(data) => addForce(data)} enabled={length > 0} />
-        <Moment onSubmit={(data) => addMoment(data)} enabled={length > 0} />
-        <Load
+        <ForceForm onSubmit={(data) => addForce(data)} enabled={length > 0} />
+        <MomentForm onSubmit={(data) => addMoment(data)} enabled={length > 0} />
+        <LoadForm
           onSubmit={(data) =>
             addLoad(
               new LoadType(
@@ -61,10 +61,10 @@ export const App = () => {
         <Situation />
       </div>
       <Sidebar>
-        <ForceList forces={forces} onForceRemove={removeForce} />
-        <SupportList supports={supports} onSupportRemove={removeSupport} />
-        <MomentList moments={moments} onMomentRemove={removeMoment} />
-        <LoadList loads={loads} onLoadRemove={removeLoad} />
+        <ForceList forces={forces} onRemove={removeForce} />
+        <SupportList supports={supports} onRemove={removeSupport} />
+        <MomentList moments={moments} onRemove={removeMoment} />
+        <LoadList loads={loads} remove={removeLoad} />
       </Sidebar>
     </section>
   );

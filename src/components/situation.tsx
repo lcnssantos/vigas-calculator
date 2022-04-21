@@ -52,8 +52,7 @@ export const Situation = () => {
   };
 
   const processBase = () => {
-    const lines = getBaseLines(length, getScale(length));
-    return lines;
+    return getBaseLines(length, getScale(length));
   };
 
   const processSupports = () => {
@@ -95,6 +94,19 @@ export const Situation = () => {
     return loads.map((l) => l.resultForces).reduce((o, f) => [...o, ...f], []);
   };
 
+  const getAllForces = () => {
+    return [
+      ...forces,
+      ...getSupportForces(),
+      ...getLoadForces(),
+      ...decodedForces,
+    ];
+  };
+
+  const getForceMoments = (forces: Array<Force>) => {
+    return forces.filter((f) => f.moment).map((f): Moment => f.moment as any);
+  };
+
   useEffect(() => {
     setLines([
       ...processBase(),
@@ -105,6 +117,7 @@ export const Situation = () => {
       ...processSupports().lines,
       ...processMoments(getSupportMoments()).lines,
       ...processMoments(moments).lines,
+      ...processMoments(getForceMoments(getAllForces())).lines,
       ...processLoads().lines,
     ]);
 
@@ -116,6 +129,7 @@ export const Situation = () => {
       ...processSupports().texts,
       ...processMoments(getSupportMoments()).texts,
       ...processMoments(moments).texts,
+      ...processMoments(getForceMoments(getAllForces())).texts,
       ...processLoads().texts,
     ]);
 
@@ -124,6 +138,7 @@ export const Situation = () => {
     setArcs([
       ...processMoments(getSupportMoments()).arcs,
       ...processMoments(moments).arcs,
+      ...processMoments(getForceMoments(getAllForces())).arcs,
     ]);
   }, [forces, length, decodedForces, supports, moments, loads]);
 

@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { CloseButton, ListGroup } from "react-bootstrap";
-import { Load } from "../types/load";
+import { Load } from "../../types/load";
 
 interface LoadListProps {
   loads: Array<Load>;
-  onLoadRemove: (data: string) => void;
+  remove: (data: string) => void;
 }
 
-export const LoadList: FC<LoadListProps> = ({ loads, onLoadRemove }) => {
+export const LoadList: FC<LoadListProps> = ({ loads, remove }) => {
   if (loads.length === 0) {
     return <></>;
   }
@@ -22,7 +22,7 @@ export const LoadList: FC<LoadListProps> = ({ loads, onLoadRemove }) => {
               {load.id}
               <CloseButton
                 variant="white"
-                onClick={() => onLoadRemove(load.id)}
+                onClick={() => remove(load.id)}
               />
             </div>
           </ListGroup.Item>

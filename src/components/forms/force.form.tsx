@@ -1,30 +1,32 @@
 import { FC } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { Force } from "../../types/force";
 
 interface FormProps {
   position: number;
-  value: number;
+  intensity: number;
+  angle: number;
   id: string;
 }
 
-interface MomentProps {
-  onSubmit: (props: FormProps) => void;
+interface ForceProps {
+  onSubmit: (props: Force) => void;
   enabled: boolean;
 }
 
-export const Moment: FC<MomentProps> = ({ onSubmit, enabled }) => {
+export const ForceForm: FC<ForceProps> = ({ onSubmit, enabled }) => {
   const { register, handleSubmit, reset } = useForm<FormProps>();
 
   return (
     <Form
       className="w-100 d-flex flex-column align-items-center"
       onSubmit={handleSubmit((data) => {
-        onSubmit(data);
+        onSubmit(new Force(data.id, data.intensity, data.angle, data.position));
         reset();
       })}
     >
-      <h6>Momento</h6>
+      <h6>Força</h6>
       <Form.Control
         type="text"
         placeholder="ID"
@@ -43,7 +45,14 @@ export const Moment: FC<MomentProps> = ({ onSubmit, enabled }) => {
         type="text"
         placeholder="Itensidade (kN)"
         className="bg-dark w-100 m-1 text-light"
-        {...register("value", { required: true, valueAsNumber: true })}
+        {...register("intensity", { required: true, valueAsNumber: true })}
+        size="sm"
+      />
+      <Form.Control
+        type="text"
+        placeholder="Ângulo (graus)"
+        className="bg-dark w-100 m-1 text-light"
+        {...register("angle", { required: true, valueAsNumber: true })}
         size="sm"
       />
       <Button

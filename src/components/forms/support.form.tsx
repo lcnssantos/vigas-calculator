@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { SupportType } from "../types/support";
+import { SupportType } from "../../types/support";
 
 interface FormProps {
   id: string;
@@ -15,7 +15,7 @@ interface BarProps {
   length: number;
 }
 
-export const Support: FC<BarProps> = ({ onSubmit, enabled, length }) => {
+export const SupportForm: FC<BarProps> = ({ onSubmit, enabled, length }) => {
   const { register, handleSubmit, reset, watch } = useForm<FormProps>();
   const state = watch();
 

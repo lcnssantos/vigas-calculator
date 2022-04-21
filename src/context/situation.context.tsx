@@ -129,6 +129,9 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
   useEffect(() => {
     const decodedForces = [...forces]
       .map((force) => {
+        if (force.angle === 0 || force.angle === 90) {
+          return [force];
+        }
         const { fx, fy } = MathCalc.decodeForce(force);
         return [fx, fy];
       })

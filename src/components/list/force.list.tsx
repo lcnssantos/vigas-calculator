@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { CloseButton, ListGroup } from "react-bootstrap";
-import { Force } from "../types/force";
+import { Force } from "../../types/force";
 
 interface ForceListProps {
   forces: Array<Force>;
-  onForceRemove: (data: string) => void;
+  onRemove: (data: string) => void;
 }
 
-export const ForceList: FC<ForceListProps> = ({ forces, onForceRemove }) => {
+export const ForceList: FC<ForceListProps> = ({ forces, onRemove }) => {
   if (forces.length === 0) {
     return <></>;
   }
@@ -22,7 +22,7 @@ export const ForceList: FC<ForceListProps> = ({ forces, onForceRemove }) => {
               {force.id}={force.intensity}N{" "}
               <CloseButton
                 variant="white"
-                onClick={() => onForceRemove(force.id)}
+                onClick={() => onRemove(force.id)}
               />
             </div>
           </ListGroup.Item>

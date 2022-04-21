@@ -11,7 +11,7 @@ interface BarProps {
   defaultValue: number;
 }
 
-export const Bar: FC<BarProps> = ({ onSubmit, defaultValue }) => {
+export const BarForm: FC<BarProps> = ({ onSubmit, defaultValue }) => {
   const { register, handleSubmit, reset, setValue } = useForm<FormProps>({
     defaultValues: {
       size: defaultValue,

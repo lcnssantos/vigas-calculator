@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { CloseButton, ListGroup } from "react-bootstrap";
-import { Support } from "../types/support";
+import { Support } from "../../types/support";
 
 interface SupportListProps {
   supports: Array<Support>;
-  onSupportRemove: (data: string) => void;
+  onRemove: (data: string) => void;
 }
 
 export const SupportList: FC<SupportListProps> = ({
   supports,
-  onSupportRemove,
+  onRemove,
 }) => {
   if (supports.length === 0) {
     return <></>;
@@ -25,7 +25,7 @@ export const SupportList: FC<SupportListProps> = ({
               {support.id}
               <CloseButton
                 variant="white"
-                onClick={() => onSupportRemove(support.id)}
+                onClick={() => onRemove(support.id)}
               />
             </div>
           </ListGroup.Item>

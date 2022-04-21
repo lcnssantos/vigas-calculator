@@ -1,0 +1,26 @@
+#app {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.w-12 {
+  width: 12%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.internal-margin * {
+  margin: 2px;
+}
+
+.w-90 {
+  width: 90%;
+}

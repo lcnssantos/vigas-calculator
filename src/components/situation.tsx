@@ -11,13 +11,14 @@ import {
   getBaseData,
   getForceData,
   getLoadData,
+  getMeasurementData,
   getMomentData,
   getScaleValue,
   getSupportData,
 } from "./utils/ui";
 
 export const Situation = () => {
-  const { forces, length, decodedForces, supports, moments, loads } =
+  const { forces, length, decodedForces, supports, moments, loads, positions } =
     useContext(SituationContext);
 
   const [lines, setLines] = useState<Array<Line>>([]);
@@ -107,6 +108,10 @@ export const Situation = () => {
     return forces.filter((f) => f.moment).map((f): Moment => f.moment as any);
   };
 
+  const processPositions = (positions: Array<number>) => {
+    return getMeasurementData(positions, length);
+  };
+
   useEffect(() => {
     setLines([
       ...processBase(),
@@ -119,6 +124,7 @@ export const Situation = () => {
       ...processMoments(moments).lines,
       ...processMoments(getForceMoments(getAllForces())).lines,
       ...processLoads().lines,
+      ...processPositions(positions).lines,
     ]);
 
     setTexts([
@@ -131,6 +137,7 @@ export const Situation = () => {
       ...processMoments(moments).texts,
       ...processMoments(getForceMoments(getAllForces())).texts,
       ...processLoads().texts,
+      ...processPositions(positions).texts,
     ]);
 
     setCircles([...processSupports().circles]);

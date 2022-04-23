@@ -376,3 +376,93 @@ export const getMomentData = (moment: Moment, baseLength: number) => {
     lines,
   };
 };
+
+export const getMeasurementData = (
+  positions: Array<number>,
+  baseLength: number
+) => {
+  const scale = getScaleValue(baseLength);
+  console.log(positions);
+
+  const lines: Array<Line> = [
+    {
+      firstPoint: [CANVAS.WIDTH * 0.05, CANVAS.HEIGHT / 2 + 150],
+      size: baseLength * scale,
+      angle: 0,
+      color: "red",
+      width: 1,
+    },
+    {
+      firstPoint: [CANVAS.WIDTH * 0.05, CANVAS.HEIGHT / 2 + 150],
+      size: 150,
+      angle: 270,
+      color: "red",
+      width: 1,
+    },
+    {
+      firstPoint: [
+        CANVAS.WIDTH * 0.05 + baseLength * scale,
+        CANVAS.HEIGHT / 2 + 150,
+      ],
+      size: 150,
+      angle: 270,
+      color: "red",
+      width: 1,
+    },
+    ...positions.map(
+      (p): Line => ({
+        firstPoint: [CANVAS.WIDTH * 0.05 + p * scale, CANVAS.HEIGHT / 2 + 150],
+        size: 150,
+        angle: 270,
+        color: "red",
+        width: 1,
+      })
+    ),
+  ];
+
+  const texts: Array<Text> = [
+    ...positions
+      .map(
+        (p, i): Text => ({
+          color: "red",
+          content: `${p - positions[i - 1]}cm`,
+          position: [
+            CANVAS.WIDTH * 0.05 + ((p + positions[i - 1]) / 2) * scale,
+            CANVAS.HEIGHT / 2 + 140,
+          ],
+        })
+      )
+      .filter((t) => t.content !== "0cm"),
+    {
+      color: "red",
+      content: `${baseLength}cm`,
+      position: [
+        CANVAS.WIDTH * 0.05 + (baseLength / 2) * scale,
+        CANVAS.HEIGHT / 2 + 170,
+      ],
+    },
+  ];
+
+  const lastPosition = positions[positions.length - 1];
+
+  if (positions.filter((p) => p !== 0).length > 0) {
+    if (lastPosition !== baseLength) {
+      texts.push({
+        color: "red",
+        content: `${baseLength - lastPosition}cm`,
+        position: [
+          CANVAS.WIDTH * 0.05 + ((baseLength + lastPosition) / 2) * scale,
+          CANVAS.HEIGHT / 2 + 140,
+        ],
+      });
+    }
+  }
+
+  return {
+    lines,
+    texts: texts.map((t) => {
+      t.content = Number(t.content.replace("cm", "")).toFixed(1) + "cm";
+      return t;
+    }),
+  };
+};

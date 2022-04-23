@@ -19,6 +19,7 @@ interface Situation {
   supports: Array<Support>;
   moments: Array<Moment>;
   loads: Array<Load>;
+  positions: Array<number>;
   addSupport: (id: string, position: number, type: SupportType) => void;
   removeSupport: (id: string) => void;
   addForce: (force: Force) => void;
@@ -37,6 +38,7 @@ export const SituationContext = createContext<Situation>({
   supports: [],
   moments: [],
   loads: [],
+  positions: [],
   addForce: () => {},
   removeForce: () => {},
   removeSupport: () => {},
@@ -71,6 +73,7 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
   });
 
   const [decodedForces, setDecodedForces] = useState<Array<Force>>([]);
+  const [positions, setPositions] = useState<Array<number>>([]);
 
   const removeElementById = (id: string) => {
     removeForce(id);
@@ -142,13 +145,32 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
       ...supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []),
       ...loads.map((l) => l.resultForces).reduce((o, f) => [...o, ...f], []),
     ]);
-  }, [forces, supports]);
+  }, [forces, supports, loads, moments]);
+
+  useEffect(() => {
+    const newPositions: Array<number> = [0];
+
+    loads.forEach((l) => {
+      newPositions.push(l.initialPosition);
+      newPositions.push(l.finalPosition);
+      l.resultForces.forEach((f) => newPositions.push(f.position));
+    });
+
+    moments.forEach((m) => newPositions.push(m.position));
+    forces.forEach((f) => newPositions.push(f.position));
+    supports.forEach((s) => newPositions.push(s.position));
+
+    setPositions(newPositions.sort((a, b) => a - b));
+
+    console.log(newPositions.sort((a, b) => a - b));
+  }, [loads, moments, forces, supports]);
 
   return (
     <SituationContext.Provider
       value={{
         forces,
         length,
+        positions,
         addForce,
         removeForce,
         removeSupport,

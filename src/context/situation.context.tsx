@@ -142,7 +142,7 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
 
     setDecodedForces([
       ...decodedForces,
-      ...supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []),
+      //...supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []),
       ...loads.map((l) => l.resultForces).reduce((o, f) => [...o, ...f], []),
     ]);
   }, [forces, supports, loads, moments]);
@@ -161,8 +161,6 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
     supports.forEach((s) => newPositions.push(s.position));
 
     setPositions(newPositions.sort((a, b) => a - b));
-
-    console.log(newPositions.sort((a, b) => a - b));
   }, [loads, moments, forces, supports]);
 
   return (

@@ -7,15 +7,7 @@ import { Line } from "../types/line";
 import { Moment } from "../types/moment";
 import { Text } from "../types/text";
 import { Canvas } from "./canvas";
-import {
-  getBaseData,
-  getForceData,
-  getLoadData,
-  getMeasurementData,
-  getMomentData,
-  getScaleValue,
-  getSupportData,
-} from "./utils/ui";
+import { CanvasUiElements } from "../ui/CanvasUiElements";
 
 export const Situation = () => {
   const { forces, length, decodedForces, supports, moments, loads, positions } =
@@ -28,21 +20,25 @@ export const Situation = () => {
 
   const processForces = (forces: Array<Force>, color = "black") => {
     const lines = forces
-      .map((force) => getForceData(force, length, color).lines)
+      .map((force) => CanvasUiElements.getForceData(force, length, color).lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     const texts = forces.map(
-      (force) => getForceData(force, length, color).text
+      (force) => CanvasUiElements.getForceData(force, length, color).texts[0]
     );
 
     return { lines, texts };
   };
 
   const processMoments = (moments: Array<Moment>, color = "black") => {
-    const arcs = moments.map((m) => getMomentData(m, length).arc);
-    const texts = moments.map((m) => getMomentData(m, length).text);
+    const arcs = moments.map(
+      (m) => CanvasUiElements.getMomentData(m, length).arcs[0]
+    );
+    const texts = moments.map(
+      (m) => CanvasUiElements.getMomentData(m, length).texts[0]
+    );
     const lines = moments
-      .map((m) => getMomentData(m, length).lines)
+      .map((m) => CanvasUiElements.getMomentData(m, length).lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     return {
@@ -53,39 +49,48 @@ export const Situation = () => {
   };
 
   const processBase = () => {
-    return getBaseData(length, getScaleValue(length));
+    return CanvasUiElements.getBaseData(
+      length,
+      CanvasUiElements.getScaleValue(length)
+    );
   };
 
   const processSupports = () => {
     const lines = supports
-      .map((support) => getSupportData(support, length, "purple").lines)
+      .map(
+        (support) =>
+          CanvasUiElements.getSupportData(support, length, "purple").lines
+      )
       .reduce((out, lines) => [...out, ...lines], []);
 
     const texts = supports.map(
-      (support) => getSupportData(support, length, "purple").text
+      (support) =>
+        CanvasUiElements.getSupportData(support, length, "purple").texts[0]
     );
 
     const circles = supports
-      .map((support) => getSupportData(support, length, "purple").circles)
+      .map(
+        (support) =>
+          CanvasUiElements.getSupportData(support, length, "purple").circles
+      )
       .reduce((out, circles) => [...out, ...circles], []);
 
     return { lines, texts, circles };
   };
 
-  const getSupportForces = () => {
-    return supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []);
-  };
-
-  const getSupportMoments = () =>
-    supports.filter((s) => s.moment).map((s): Moment => s.moment as any);
-
   const processLoads = () => {
+    const absoluteValues = loads
+      .map((l) => [Math.abs(l.finalValue), Math.abs(l.initialValue)])
+      .reduce((out, values) => [...out, ...values], []);
+
+    const maxValue = Math.max(...absoluteValues);
+
     const lines = loads
-      .map((load) => getLoadData(load, length).lines)
+      .map((load) => CanvasUiElements.getLoadData(load, length, maxValue).lines)
       .reduce((out, lines) => [...out, ...lines], []);
 
     const texts = loads
-      .map((load) => getLoadData(load, length).texts)
+      .map((load) => CanvasUiElements.getLoadData(load, length, maxValue).texts)
       .reduce((out, texts) => [...out, ...texts], []);
 
     return { lines, texts };
@@ -95,58 +100,33 @@ export const Situation = () => {
     return loads.map((l) => l.resultForces).reduce((o, f) => [...o, ...f], []);
   };
 
-  const getAllForces = () => {
-    return [
-      ...forces,
-      ...getSupportForces(),
-      ...getLoadForces(),
-      ...decodedForces,
-    ];
-  };
-
-  const getForceMoments = (forces: Array<Force>) => {
-    return forces.filter((f) => f.moment).map((f): Moment => f.moment as any);
-  };
-
   const processPositions = (positions: Array<number>) => {
-    return getMeasurementData(positions, length);
+    return CanvasUiElements.getMeasurementData(positions, length);
   };
 
   useEffect(() => {
     setLines([
-      ...processBase(),
-      ...processForces(forces, "blue").lines,
-      ...processForces(getSupportForces(), "red").lines,
-      ...processForces(getLoadForces(), "green").lines,
+      ...processBase().lines,
+      //...processForces(forces, "blue").lines,
       ...processForces(decodedForces, "green").lines,
       ...processSupports().lines,
-      ...processMoments(getSupportMoments()).lines,
       ...processMoments(moments).lines,
-      ...processMoments(getForceMoments(getAllForces())).lines,
       ...processLoads().lines,
       ...processPositions(positions).lines,
     ]);
 
     setTexts([
-      ...processForces(forces, "blue").texts,
-      ...processForces(getSupportForces(), "red").texts,
-      ...processForces(getLoadForces(), "green").texts,
+      //...processForces(forces, "blue").texts,
       ...processForces(decodedForces, "green").texts,
       ...processSupports().texts,
-      ...processMoments(getSupportMoments()).texts,
       ...processMoments(moments).texts,
-      ...processMoments(getForceMoments(getAllForces())).texts,
       ...processLoads().texts,
       ...processPositions(positions).texts,
     ]);
 
     setCircles([...processSupports().circles]);
 
-    setArcs([
-      ...processMoments(getSupportMoments()).arcs,
-      ...processMoments(moments).arcs,
-      ...processMoments(getForceMoments(getAllForces())).arcs,
-    ]);
+    setArcs([...processMoments(moments).arcs]);
   }, [forces, length, decodedForces, supports, moments, loads]);
 
   return <Canvas lines={lines} texts={texts} circles={circles} arcs={arcs} />;

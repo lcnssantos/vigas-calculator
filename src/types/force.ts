@@ -17,15 +17,5 @@ export class Force {
     this.intensity = intensity;
     this.angle = angle;
     this.position = position;
-
-    if (position > 0) {
-      this.moment = {
-        id: "M" + this.id,
-        position: position,
-        value: this.intensity
-          ? Math.round(this.intensity * position * 10) / 10
-          : undefined,
-      };
-    }
   }
 }

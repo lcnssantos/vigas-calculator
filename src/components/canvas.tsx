@@ -4,7 +4,7 @@ import { Arc } from "../types/arc";
 import { Circle } from "../types/circle";
 import { Line } from "../types/line";
 import { Text } from "../types/text";
-import { drawArc, drawCircle, drawLine, drawText } from "./utils/draw";
+import { CanvasDraw } from "../ui/CanvasDraw";
 
 interface CanvasProps {
   lines: Array<Line>;
@@ -21,19 +21,19 @@ export const Canvas: FC<CanvasProps> = ({ lines, texts, circles, arcs }) => {
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
       for (const line of lines) {
-        drawLine(context, line);
+        CanvasDraw.drawLine(context, line);
       }
 
       for (const text of texts) {
-        drawText(context, text);
+        CanvasDraw.drawText(context, text);
       }
 
       for (const circle of circles) {
-        drawCircle(context, circle);
+        CanvasDraw.drawCircle(context, circle);
       }
 
       for (const arc of arcs) {
-        drawArc(context, arc);
+        CanvasDraw.drawArc(context, arc);
       }
     }
   }, [lines]);

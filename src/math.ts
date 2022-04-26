@@ -1,4 +1,4 @@
-import { Calc } from "./components/utils/math";
+import { Calc } from "./utils/math";
 import { Force } from "./types/force";
 
 export class MathCalc {

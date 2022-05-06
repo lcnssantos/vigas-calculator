@@ -306,11 +306,6 @@ export class CanvasUiElements {
             )
           );
 
-    console.log({
-      POSITION_INTERVAL,
-      CENTER,
-      QUANTITY,
-    });
     const lines: Array<Line> = [
       {
         firstPoint: [

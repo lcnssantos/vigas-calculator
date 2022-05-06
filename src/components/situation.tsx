@@ -1,11 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { SituationContext } from "../context/situation.context";
-import { Arc } from "../types/arc";
-import { Circle } from "../types/circle";
 import { Force } from "../types/force";
-import { Line } from "../types/line";
 import { Moment } from "../types/moment";
-import { Text } from "../types/text";
 import { CanvasUiElements } from "../ui/CanvasUiElements";
 import { UiElement } from "../ui/uiElement";
 import { Canvas } from "./canvas";
@@ -14,12 +10,14 @@ export const Situation = () => {
   const { forces, length, decodedForces, supports, moments, loads, positions } =
     useContext(SituationContext);
 
-  const [lines, setLines] = useState<Array<Line>>([]);
-  const [texts, setTexts] = useState<Array<Text>>([]);
-  const [circles, setCircles] = useState<Array<Circle>>([]);
-  const [arcs, setArcs] = useState<Array<Arc>>([]);
+  const [data, setData] = useState<UiElement>({
+    arcs: [],
+    circles: [],
+    lines: [],
+    texts: [],
+  });
 
-  const concateUiElements = (data: Array<UiElement>) =>
+  const concatUiElements = (data: Array<UiElement>) =>
     data.reduce(
       (out, uiElement) => ({
         lines: [...out.lines, ...uiElement.lines],
@@ -36,13 +34,13 @@ export const Situation = () => {
     );
 
   const processForces = (forces: Array<Force>, color = "black") => {
-    return concateUiElements(
+    return concatUiElements(
       forces.map((force) => CanvasUiElements.getForceData(force, length, color))
     );
   };
 
   const processMoments = (moments: Array<Moment>, color = "black") => {
-    return concateUiElements(
+    return concatUiElements(
       moments.map((m) => CanvasUiElements.getMomentData(m, length))
     );
   };
@@ -52,7 +50,7 @@ export const Situation = () => {
   };
 
   const processSupports = () => {
-    return concateUiElements(
+    return concatUiElements(
       supports.map((support) =>
         CanvasUiElements.getSupportData(support, length, "purple")
       )
@@ -66,7 +64,7 @@ export const Situation = () => {
 
     const maxValue = Math.max(...absoluteValues);
 
-    return concateUiElements(
+    return concatUiElements(
       loads.map((load) => CanvasUiElements.getLoadData(load, length, maxValue))
     );
   };
@@ -77,26 +75,25 @@ export const Situation = () => {
 
   useEffect(() => {
     const baseUi = processBase();
-    const decodedforcesUi = processForces(decodedForces, "green");
+    const decodedforcesUi = processForces(decodedForces, "blue");
     const supportsUi = processSupports();
     const momentsUi = processMoments(moments);
     const loadsUi = processLoads();
     const positionsUi = processPositions(positions);
+    const forcesUi = processForces(forces, "green");
 
-    const concatenatedUi = concateUiElements([
-      baseUi,
-      decodedforcesUi,
-      supportsUi,
-      momentsUi,
-      loadsUi,
-      positionsUi,
-    ]);
-
-    setLines(concatenatedUi.lines);
-    setTexts(concatenatedUi.texts);
-    setCircles(concatenatedUi.circles);
-    setArcs(concatenatedUi.arcs);
+    setData(
+      concatUiElements([
+        baseUi,
+        decodedforcesUi,
+        supportsUi,
+        momentsUi,
+        loadsUi,
+        positionsUi,
+        forcesUi,
+      ])
+    );
   }, [forces, length, decodedForces, supports, moments, loads]);
 
-  return <Canvas lines={lines} texts={texts} circles={circles} arcs={arcs} />;
+  return <Canvas data={data} />;
 };

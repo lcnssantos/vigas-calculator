@@ -129,20 +129,21 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
     setLoads(loads.filter((load) => load.id !== id));
   };
 
-  useEffect(() => {
-    const decodedForces = [...forces]
+  const getDecodedForces = (forces: Array<Force>) =>
+    forces
       .map((force) => {
-        if (force.angle === 0 || force.angle === 90) {
-          return [force];
+        if ([0, 90, 180, 270].includes(force.angle)) {
+          return [];
         }
         const { fx, fy } = MathCalc.decodeForce(force);
         return [fx, fy];
       })
       .reduce((out, forceList) => [...out, ...forceList], []);
 
+  useEffect(() => {
     setDecodedForces([
-      ...decodedForces,
-      //...supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []),
+      ...getDecodedForces(forces),
+      ...supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []),
       ...loads.map((l) => l.resultForces).reduce((o, f) => [...o, ...f], []),
     ]);
   }, [forces, supports, loads, moments]);

@@ -1,19 +1,15 @@
 import { FC, useEffect } from "react";
 import { CANVAS } from "../constants";
-import { Arc } from "../types/arc";
-import { Circle } from "../types/circle";
-import { Line } from "../types/line";
-import { Text } from "../types/text";
 import { CanvasDraw } from "../ui/CanvasDraw";
+import { UiElement } from "../ui/uiElement";
 
 interface CanvasProps {
-  lines: Array<Line>;
-  texts: Array<Text>;
-  circles: Array<Circle>;
-  arcs: Array<Arc>;
+  data: UiElement;
 }
 
-export const Canvas: FC<CanvasProps> = ({ lines, texts, circles, arcs }) => {
+export const Canvas: FC<CanvasProps> = ({ data }) => {
+  const { arcs, circles, lines, texts } = data;
+
   useEffect(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const context = canvas.getContext("2d");

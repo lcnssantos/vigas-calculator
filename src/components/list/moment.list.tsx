@@ -14,7 +14,7 @@ export const MomentList: FC<MomentListProps> = ({ moments, onRemove }) => {
 
   return (
     <>
-      <h6>Forças</h6>
+      <h6>Momentos</h6>
       <ListGroup>
         {moments.map((moment) => (
           <ListGroup.Item className="bg-dark text-light" key={moment.id}>

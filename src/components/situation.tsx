@@ -41,7 +41,7 @@ export const Situation = () => {
 
   const processMoments = (moments: Array<Moment>, color = "black") => {
     return concatUiElements(
-      moments.map((m) => CanvasUiElements.getMomentData(m, length))
+      moments.map((m) => CanvasUiElements.getMomentData(m, length, color))
     );
   };
 
@@ -74,10 +74,24 @@ export const Situation = () => {
   };
 
   useEffect(() => {
+    if (length === 0) {
+      setData({
+        arcs: [],
+        circles: [],
+        lines: [],
+        texts: [],
+      });
+      return;
+    }
+
     const baseUi = processBase();
     const decodedforcesUi = processForces(decodedForces, "blue");
     const supportsUi = processSupports();
-    const momentsUi = processMoments(moments);
+    const momentsUi = processMoments(moments, "brown");
+    const supportMomentsUi = processMoments(
+      supports.filter((s) => s.moment).map((s) => s.moment) as Array<Moment>,
+      "brown"
+    );
     const loadsUi = processLoads();
     const positionsUi = processPositions(positions);
     const forcesUi = processForces(forces, "green");
@@ -91,6 +105,7 @@ export const Situation = () => {
         loadsUi,
         positionsUi,
         forcesUi,
+        supportMomentsUi,
       ])
     );
   }, [forces, length, decodedForces, supports, moments, loads]);

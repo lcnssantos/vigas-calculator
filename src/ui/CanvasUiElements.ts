@@ -366,7 +366,11 @@ export class CanvasUiElements {
     };
   };
 
-  static getMomentData = (moment: Moment, baseLength: number): UiElement => {
+  static getMomentData = (
+    moment: Moment,
+    baseLength: number,
+    color = "brown"
+  ): UiElement => {
     const scale = this.getScaleValue(baseLength);
     const CENTER =
       CANVAS.WIDTH / 2 - (baseLength / 2 - moment.position) * scale;
@@ -379,7 +383,7 @@ export class CanvasUiElements {
 
     const arc: Arc = {
       center: [CENTER - RADIUS / 2, CANVAS.HEIGHT / 2],
-      color: "brown",
+      color: color,
       startAngle: START,
       endAngle: END,
       radius: RADIUS,
@@ -395,7 +399,7 @@ export class CanvasUiElements {
         CENTER + (moment.position === 0 ? -RADIUS * 2 : RADIUS * 2),
         CANVAS.HEIGHT / 2 - RADIUS * 1.3,
       ],
-      color: "brown",
+      color: color,
     };
 
     const { cos: COS_START, sin: SIN_START } = Calc.getCosSinTan(START);
@@ -408,7 +412,7 @@ export class CanvasUiElements {
         ],
         size: RADIUS / 2,
         angle: MOMENT_NEGATIVE ? 30 : -100,
-        color: "brown",
+        color: color,
         width: 4,
       },
       {
@@ -418,7 +422,7 @@ export class CanvasUiElements {
         ],
         size: RADIUS / 2,
         angle: MOMENT_NEGATIVE ? -75 : 145,
-        color: "brown",
+        color: color,
         width: 4,
       },
     ];

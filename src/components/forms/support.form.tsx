@@ -47,7 +47,7 @@ export const SupportForm: FC<BarProps> = ({ onSubmit, enabled, length }) => {
       {state.type !== SupportType.EMBED && (
         <Form.Control
           type="text"
-          placeholder="Posição (cm)"
+          placeholder="Posição (m)"
           className="bg-dark w-100 m-1 text-light"
           {...register("position", { required: true, valueAsNumber: true })}
           size="sm"

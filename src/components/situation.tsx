@@ -6,9 +6,9 @@ import { Force } from "../types/force";
 import { Line } from "../types/line";
 import { Moment } from "../types/moment";
 import { Text } from "../types/text";
-import { Canvas } from "./canvas";
 import { CanvasUiElements } from "../ui/CanvasUiElements";
 import { UiElement } from "../ui/uiElement";
+import { Canvas } from "./canvas";
 
 export const Situation = () => {
   const { forces, length, decodedForces, supports, moments, loads, positions } =
@@ -48,10 +48,7 @@ export const Situation = () => {
   };
 
   const processBase = () => {
-    return CanvasUiElements.getBaseData(
-      length,
-      CanvasUiElements.getScaleValue(length)
-    );
+    return CanvasUiElements.getBaseData(length);
   };
 
   const processSupports = () => {

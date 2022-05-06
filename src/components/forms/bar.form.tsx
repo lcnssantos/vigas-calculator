@@ -29,7 +29,7 @@ export const BarForm: FC<BarProps> = ({ onSubmit, defaultValue }) => {
       <h6>Viga</h6>
       <Form.Control
         type="text"
-        placeholder="Tamanho barra (cm)"
+        placeholder="Tamanho barra (m)"
         className="bg-dark w-100 m-1 text-light"
         {...register("size", { required: true, valueAsNumber: true })}
         size="sm"

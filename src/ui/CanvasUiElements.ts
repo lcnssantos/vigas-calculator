@@ -1,13 +1,13 @@
 import { CANVAS } from "../constants";
-import { Line } from "../types/line";
-import { Support, SupportType } from "../types/support";
-import { Text } from "../types/text";
+import { Arc, ArcDirection } from "../types/arc";
 import { Circle } from "../types/circle";
 import { Force } from "../types/force";
-import { Calc } from "../utils/math";
+import { Line } from "../types/line";
 import { Load } from "../types/load";
 import { Moment } from "../types/moment";
-import { Arc, ArcDirection } from "../types/arc";
+import { Support, SupportType } from "../types/support";
+import { Text } from "../types/text";
+import { Calc } from "../utils/math";
 import { UiElement } from "./uiElement";
 
 export class CanvasUiElements {
@@ -111,7 +111,7 @@ export class CanvasUiElements {
     const getSimpleSupportSymbol = () => {
       const circles: Array<Circle> = [
         {
-          center: [CENTER, CANVAS.HEIGHT / 2 + scale + LENGTH / 2],
+          center: [CENTER, CANVAS.HEIGHT / 2 + LENGTH / 2],
           color,
           radius: LENGTH / 2,
           width,
@@ -124,7 +124,7 @@ export class CanvasUiElements {
       const lines = [
         ...this.getEquilateralTriangleData(
           LENGTH,
-          [CENTER, CANVAS.HEIGHT / 2 + scale],
+          [CENTER, CANVAS.HEIGHT / 2],
           color,
           width
         ).lines,
@@ -256,11 +256,12 @@ export class CanvasUiElements {
     };
   };
 
-  static getBaseData = (length: number, scale: number): UiElement => {
+  static getBaseData = (length: number): UiElement => {
     const marginLeft = CANVAS.WIDTH * 0.05;
+    const scale = this.getScaleValue(length);
 
     const line: Line = {
-      firstPoint: [marginLeft, CANVAS.HEIGHT / 2 + scale],
+      firstPoint: [marginLeft, CANVAS.HEIGHT / 2],
       size: scale * length,
       angle: 0,
       width: 4,
@@ -284,10 +285,10 @@ export class CanvasUiElements {
       CANVAS.WIDTH / 2 - (baseLength / 2 - load.initialPosition) * scale;
 
     const QUANTITY = Math.round(
-      (load.finalPosition - load.initialPosition) / 10
+      (load.finalPosition - load.initialPosition) / 0.1
     );
 
-    const MAX_LENGTH = 100;
+    const MAX_LENGTH = CANVAS.HEIGHT / 25;
 
     const VALUE_INTERVAL = load.finalValue - load.initialValue;
     const POSITION_INTERVAL = Math.abs(
@@ -305,6 +306,11 @@ export class CanvasUiElements {
             )
           );
 
+    console.log({
+      POSITION_INTERVAL,
+      CENTER,
+      QUANTITY,
+    });
     const lines: Array<Line> = [
       {
         firstPoint: [
@@ -316,7 +322,7 @@ export class CanvasUiElements {
           Calc.getCosSinTan(ANGLE).cos,
         angle: isNaN(ANGLE) ? 0 : -ANGLE,
       },
-      ...new Array(QUANTITY + 1)
+      ...new Array(Math.abs(QUANTITY) + 1)
         .fill("a")
         .map(
           (_, index) =>
@@ -338,7 +344,6 @@ export class CanvasUiElements {
         )
         .reduce((out, lines) => [...out, ...lines], []),
     ];
-
     const texts: Array<Text> = [
       {
         color: "black",
@@ -391,7 +396,10 @@ export class CanvasUiElements {
 
     const text: Text = {
       content: moment.value ? `${moment.id}=${moment.value}kNm` : moment.id,
-      position: [CENTER - RADIUS * 2, CANVAS.HEIGHT / 2 - RADIUS * 1.3],
+      position: [
+        CENTER + (moment.position === 0 ? -RADIUS * 2 : RADIUS * 2),
+        CANVAS.HEIGHT / 2 - RADIUS * 1.3,
+      ],
       color: "brown",
     };
 
@@ -478,17 +486,17 @@ export class CanvasUiElements {
         .map(
           (p, i): Text => ({
             color: "red",
-            content: `${p - positions[i - 1]}cm`,
+            content: `${p - positions[i - 1]}m`,
             position: [
               CANVAS.WIDTH * 0.05 + ((p + positions[i - 1]) / 2) * scale,
               CANVAS.HEIGHT / 2 + 140,
             ],
           })
         )
-        .filter((t) => t.content !== "0cm"),
+        .filter((t) => t.content !== "0m"),
       {
         color: "red",
-        content: `${baseLength}cm`,
+        content: `${baseLength}m`,
         position: [
           CANVAS.WIDTH * 0.05 + (baseLength / 2) * scale,
           CANVAS.HEIGHT / 2 + 170,
@@ -502,7 +510,7 @@ export class CanvasUiElements {
       if (lastPosition !== baseLength) {
         texts.push({
           color: "red",
-          content: `${baseLength - lastPosition}cm`,
+          content: `${baseLength - lastPosition}m`,
           position: [
             CANVAS.WIDTH * 0.05 + ((baseLength + lastPosition) / 2) * scale,
             CANVAS.HEIGHT / 2 + 140,
@@ -514,7 +522,7 @@ export class CanvasUiElements {
     return {
       lines,
       texts: texts.map((t) => {
-        t.content = Number(t.content.replace("cm", "")).toFixed(1) + "cm";
+        t.content = Number(t.content.replace("m", "")).toFixed(2) + "m";
         return t;
       }),
       arcs: [],

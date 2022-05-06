@@ -1,8 +1,8 @@
-import { Text } from "../types/text";
-import { Line } from "../types/line";
-import { Calc } from "../utils/math";
-import { Circle } from "../types/circle";
 import { Arc, ArcDirection } from "../types/arc";
+import { Circle } from "../types/circle";
+import { Line } from "../types/line";
+import { Text } from "../types/text";
+import { Calc } from "../utils/math";
 
 export class CanvasDraw {
   static drawText = (
@@ -11,7 +11,7 @@ export class CanvasDraw {
   ) => {
     context.font = "16px Arial";
     context.fillStyle = color;
-    context.fillText(content, position[0], position[1]);
+    context.fillText(content, position[0] - content.length * 4, position[1]);
   };
 
   static drawLine = (

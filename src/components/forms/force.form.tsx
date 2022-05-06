@@ -36,7 +36,7 @@ export const ForceForm: FC<ForceProps> = ({ onSubmit, enabled }) => {
       />
       <Form.Control
         type="text"
-        placeholder="Posição (cm)"
+        placeholder="Posição (m)"
         className="bg-dark w-100 m-1 text-light"
         {...register("position", { required: true, valueAsNumber: true })}
         size="sm"

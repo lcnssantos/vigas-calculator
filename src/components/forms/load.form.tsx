@@ -45,7 +45,7 @@ export const LoadForm: FC<LoadProps> = ({ onSubmit, enabled }) => {
       />
       <Form.Control
         type="text"
-        placeholder="Posição Inicial (cm)"
+        placeholder="Posição Inicial (m)"
         className="bg-dark w-100 m-1 text-light"
         {...register("initialPosition", {
           required: true,
@@ -55,7 +55,7 @@ export const LoadForm: FC<LoadProps> = ({ onSubmit, enabled }) => {
       />
       <Form.Control
         type="text"
-        placeholder="Posição final (cm)"
+        placeholder="Posição final (m)"
         className="bg-dark w-100 m-1 text-light"
         {...register("finalPosition", { required: true, valueAsNumber: true })}
         size="sm"

@@ -1,10 +1,7 @@
 import React, {useState} from "react";
 import {Button, Offcanvas} from "react-bootstrap";
 import {BiCaretRight} from 'react-icons/bi';
-
-type Props = {
-    title: string,
-};
+import {Props} from "../types/props";
 
 export const LeftSidebar: React.FC<Props> = ({title, children}) => {
 
@@ -18,6 +15,7 @@ export const LeftSidebar: React.FC<Props> = ({title, children}) => {
             <Button
                 variant="success"
                 style={{
+                    zIndex: '10',
                     maxHeight: '10%',
                     maxWidth: '10%',
                     minHeight: '8px',
@@ -29,7 +27,7 @@ export const LeftSidebar: React.FC<Props> = ({title, children}) => {
                     borderRadius: '50%',
                     backgroundColor: 'rgba(9, 146, 104, 70%)',
                     position: 'absolute',
-                    left: '-11px',
+                    left: '-17px',
                     top: '50%'
                 }}
                 onClick={handleShow}>

@@ -14,7 +14,7 @@ export const LoadList: FC<LoadListProps> = ({ loads, remove }) => {
 
   return (
     <>
-      <h6>Cargas</h6>
+      <h6 style={{ marginTop: "24px" }}>Cargas</h6>
       <ListGroup>
         {loads.map((load) => (
           <ListGroup.Item className="bg-dark text-light" key={load.id}>

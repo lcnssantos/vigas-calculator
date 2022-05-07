@@ -14,7 +14,7 @@ export const ForceList: FC<ForceListProps> = ({ forces, onRemove }) => {
 
   return (
     <>
-      <h6>Forças</h6>
+      <h6 style={{ marginTop: "10px" }}>Forças</h6>
       <ListGroup>
         {forces.map((force) => (
           <ListGroup.Item className="bg-dark text-light" key={force.id}>

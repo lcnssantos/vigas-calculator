@@ -36,12 +36,18 @@ export const Canvas: FC<CanvasProps> = ({data}) => {
     }, [lines]);
 
     return (
-        <Container>
+        <Container style={{width: '100%', overflow: 'scroll'}}>
             <canvas
                 id="canvas"
                 width={CANVAS.WIDTH}
                 height={CANVAS.HEIGHT}
-                style={{width: '100%', display: 'block'}}
+                style={{
+                    height: '100%',
+                    minHeight: '500px',
+                    width: '100%',
+                    minWidth: '700px',
+                    display: 'block'
+            }}
             >
             </canvas>
         </Container>

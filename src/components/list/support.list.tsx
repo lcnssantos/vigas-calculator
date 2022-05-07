@@ -17,7 +17,7 @@ export const SupportList: FC<SupportListProps> = ({
 
   return (
     <>
-      <h6>Suportes</h6>
+      <h6 style={{ marginTop: "24px" }}>Suportes</h6>
       <ListGroup>
         {supports.map((support) => (
           <ListGroup.Item className="bg-dark text-light" key={support.id}>

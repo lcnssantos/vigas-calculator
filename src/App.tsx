@@ -12,7 +12,7 @@ import {SupportForm} from "./components/forms/support.form";
 import {SupportList} from "./components/list/support.list";
 import {SituationContext} from "./context/situation.context";
 import {Load as LoadType} from "./types/load";
-import LeftSideBar from "./components/LeftSideBar";
+import LeftSidebar from "./components/left.sidebar";
 
 export const App = () => {
     const {
@@ -34,7 +34,7 @@ export const App = () => {
 
     return (
         <section className="d-flex h-100 vh-100">
-            <LeftSideBar title={'Defina as forças, apoios e momentos'}>
+            <LeftSidebar title={'Defina as forças, apoios e momentos'}>
                 <BarForm onSubmit={(data) => setLength(data.size)} defaultValue={length}/>
                 <SupportForm
                     onSubmit={(data) => addSupport(data.id, data.position, data.type)}
@@ -57,7 +57,7 @@ export const App = () => {
                     }
                     enabled={length > 0}
                 />
-            </LeftSideBar>
+            </LeftSidebar>
 
             <main className="d-flex w-100">
                 <Situation/>

@@ -6,7 +6,7 @@ type Props = {
     title: string,
 };
 
-export const LeftSideBar: React.FC<Props> = ({title, children}) => {
+export const LeftSidebar: React.FC<Props> = ({title, children}) => {
 
     const [show, setShow] = useState(false);
 
@@ -50,4 +50,4 @@ export const LeftSideBar: React.FC<Props> = ({title, children}) => {
     );
 }
 
-export default LeftSideBar
+export default LeftSidebar

@@ -21,6 +21,7 @@ export const ForceForm: FC<ForceProps> = ({ onSubmit, enabled }) => {
   return (
     <Form
       className="w-100 d-flex flex-column align-items-center"
+      style={{marginTop: '24px'}}
       onSubmit={handleSubmit((data) => {
         onSubmit(new Force(data.id, data.intensity, data.angle, data.position));
         reset();

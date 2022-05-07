@@ -22,6 +22,7 @@ export const SupportForm: FC<BarProps> = ({ onSubmit, enabled, length }) => {
   return (
     <Form
       className="w-100 d-flex flex-column align-items-center"
+      style={{marginTop: '24px'}}
       onSubmit={handleSubmit((data) => {
         onSubmit(data);
         reset();

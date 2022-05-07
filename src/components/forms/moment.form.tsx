@@ -19,6 +19,7 @@ export const MomentForm: FC<MomentProps> = ({ onSubmit, enabled }) => {
   return (
     <Form
       className="w-100 d-flex flex-column align-items-center"
+      style={{marginTop: '24px'}}
       onSubmit={handleSubmit((data) => {
         onSubmit(data);
         reset();

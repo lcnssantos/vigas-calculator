@@ -12,7 +12,7 @@ import {SupportForm} from "./components/forms/support.form";
 import {SupportList} from "./components/list/support.list";
 import {SituationContext} from "./context/situation.context";
 import {Load as LoadType} from "./types/load";
-import RightSideBar from "./components/sidebars/RightSideBar";
+import LeftSideBar from "./components/LeftSideBar";
 
 export const App = () => {
     const {
@@ -34,7 +34,7 @@ export const App = () => {
 
     return (
         <section className="d-flex h-100 vh-100">
-            <RightSideBar title={'Formulário de Forças'}>
+            <LeftSideBar title={'Defina as forças, apoios e momentos'}>
                 <BarForm onSubmit={(data) => setLength(data.size)} defaultValue={length}/>
                 <SupportForm
                     onSubmit={(data) => addSupport(data.id, data.position, data.type)}
@@ -57,17 +57,21 @@ export const App = () => {
                     }
                     enabled={length > 0}
                 />
-            </RightSideBar>
+            </LeftSideBar>
 
-            <div className="vw-100">
+            <main className="d-flex w-100">
                 <Situation/>
-            </div>
-            <Sidebar>
-                <ForceList forces={forces} onRemove={removeForce}/>
-                <SupportList supports={supports} onRemove={removeSupport}/>
-                <MomentList moments={moments} onRemove={removeMoment}/>
-                <LoadList loads={loads} remove={removeLoad}/>
-            </Sidebar>
+
+                <Sidebar>
+                    <ForceList forces={forces} onRemove={removeForce}/>
+                    <SupportList supports={supports} onRemove={removeSupport}/>
+                    <MomentList moments={moments} onRemove={removeMoment}/>
+                    <LoadList loads={loads} remove={removeLoad}/>
+                </Sidebar>
+            </main>
+
         </section>
     );
 };
+
+export default App

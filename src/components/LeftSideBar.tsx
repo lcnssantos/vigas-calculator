@@ -6,7 +6,7 @@ type Props = {
     title: string,
 };
 
-export const RightSideBar: React.FC<Props> = ({title, children}) => {
+export const LeftSideBar: React.FC<Props> = ({title, children}) => {
 
     const [show, setShow] = useState(false);
 
@@ -19,21 +19,24 @@ export const RightSideBar: React.FC<Props> = ({title, children}) => {
                 variant="success"
                 style={{
                     maxHeight: '10%',
-                    maxWidth: '5%',
+                    maxWidth: '10%',
+                    minHeight: '8px',
+                    minWidth: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
                     alignSelf: 'center',
                     justifySelf: 'center',
-                    textAlign: 'center',
-                    borderRadius: '60%',
+                    borderRadius: '50%',
                     backgroundColor: 'rgba(9, 146, 104, 70%)',
                     position: 'absolute',
-                    left: '-1%',
+                    left: '-11px',
                     top: '50%'
                 }}
                 onClick={handleShow}>
                 <BiCaretRight/>
             </Button>
 
-            <Offcanvas show={show} onHide={handleClose}>
+            <Offcanvas style={{opacity: '0.9'}} show={show} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>{title}</Offcanvas.Title>
                 </Offcanvas.Header>
@@ -47,4 +50,4 @@ export const RightSideBar: React.FC<Props> = ({title, children}) => {
     );
 }
 
-export default RightSideBar
+export default LeftSideBar

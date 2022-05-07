@@ -15,6 +15,7 @@ export const LoadForm: FC<LoadProps> = ({ onSubmit, enabled }) => {
 
   return (
     <Form
+      style={{marginTop: '24px'}}
       className="w-100 d-flex flex-column align-items-center"
       onSubmit={handleSubmit((data) => {
         onSubmit(data);

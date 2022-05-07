@@ -13,7 +13,9 @@
     "react-bootstrap": "^2.3.0",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.30.0",
-    "use-local-storage-state": "^17.0.1"
+    "react-icons": "^4.3.1",
+    "use-local-storage-state": "^17.0.1",
+    "yarn": "^1.22.18"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",

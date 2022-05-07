@@ -30,7 +30,10 @@ export const App = () => {
         addLoad,
         loads,
         removeLoad,
+        sumOfYForces
     } = useContext(SituationContext);
+
+    sumOfYForces(forces, supports);
 
     return (
         <section className="d-flex h-100 vh-100" style={{transition: 'all 1s'}}>

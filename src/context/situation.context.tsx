@@ -29,7 +29,6 @@ interface Situation {
   setLength: (length: number) => void;
   addLoad: (load: Load) => void;
   removeLoad: (id: string) => void;
-  sumOfYForces: (forces: Array<Force>, supports: Array<Support>) => void;
 }
 
 export const SituationContext = createContext<Situation>({
@@ -48,37 +47,10 @@ export const SituationContext = createContext<Situation>({
   addMoment: () => {},
   removeMoment: () => {},
   addLoad: () => {},
-  removeLoad: () => {},
-  sumOfYForces: () => {}
+  removeLoad: () => {}
 });
 
 export const SituationProvider: FunctionComponent = ({ children }) => {
-
-  const sumOfYForces = (forces: Array<Force>, supports: Array<Support>) => {
-        let forceResult: number = 0;
-        let supportNumber: number = 0;
-        let supportReaction: number = 0;
-
-        forces.forEach((force) => {
-          forceResult += force.intensity || 0;
-        });
-
-        supports.forEach(() => {
-          supportNumber += 1;
-        });
-
-        if (supportNumber > 0) {
-          supportReaction = forceResult / supportNumber
-
-          supports.forEach((s) => {
-            s.forces.map((f) => {
-              if (f.id = 'y') {
-                f.intensity = supportReaction;
-              }
-            });
-          });
-        }
-  }
 
   const [forces, setForces] = useLocalStorageState<Array<Force>>("forces", {
     defaultValue: [],
@@ -211,8 +183,7 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
         moments,
         addLoad,
         loads,
-        removeLoad,
-        sumOfYForces
+        removeLoad
       }}
     >
       {children}

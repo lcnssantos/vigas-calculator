@@ -13,6 +13,7 @@ import {SituationContext} from "./context/situation.context";
 import {Load as LoadType} from "./types/load";
 import LeftSidebar from "./components/left.sidebar";
 import RightSidebar from "./components/right.sidebar";
+import {SupportReaction} from "./utils/supportReaction";
 
 export const App = () => {
     const {
@@ -29,11 +30,10 @@ export const App = () => {
         removeMoment,
         addLoad,
         loads,
-        removeLoad,
-        sumOfYForces
+        removeLoad
     } = useContext(SituationContext);
 
-    sumOfYForces(forces, supports);
+    console.log(SupportReaction.getSupportReaction(forces, supports));
 
     return (
         <section className="d-flex h-100 vh-100" style={{transition: 'all 1s'}}>

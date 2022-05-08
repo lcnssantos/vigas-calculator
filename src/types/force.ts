@@ -1,8 +1,11 @@
 import { Moment } from "./moment";
+import {MathCalc} from "../math";
 
 export class Force {
   id: string;
   intensity: number | undefined;
+  XComponent: number | undefined;
+  YComponent: number | undefined;
   angle: number;
   position: number;
   moment: Moment | undefined;
@@ -17,5 +20,6 @@ export class Force {
     this.intensity = intensity;
     this.angle = angle;
     this.position = position;
+    [this.XComponent, this.YComponent] = MathCalc.decodeSingleForce(intensity, angle);
   }
 }

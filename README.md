@@ -17,6 +17,14 @@
 
 ### Introdução
 
+### Desenvolvimento
+
+ > 08/05/2022 - Adicionado Cálculo de somatório de forças no eixos X e Y.
+Como demonstra os seguintes registros:
+![calculo-em-maos](./file/calculo-somatorio-de-forcas.png)
+ > Resultado em tela:
+![calculo-em-maos](./file/calculo-somatorio-de-forcas-resultado.png)
+
 ### Conclusão
 
 ### Referências

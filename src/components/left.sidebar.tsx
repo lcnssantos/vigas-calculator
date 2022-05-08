@@ -34,7 +34,7 @@ export const LeftSidebar: React.FC<Props> = ({title, children}) => {
                 <BiCaretRight/>
             </Button>
 
-            <Offcanvas style={{opacity: '0.9'}} show={show} onHide={handleClose}>
+            <Offcanvas style={{opacity: '0.9'}} show={show} onHide={handleClose} scroll={true} backdrop={true}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>{title}</Offcanvas.Title>
                 </Offcanvas.Header>

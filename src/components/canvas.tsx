@@ -2,7 +2,6 @@ import {FC, useEffect} from "react";
 import {CANVAS} from "../constants";
 import {CanvasDraw} from "../ui/CanvasDraw";
 import {UiElement} from "../ui/uiElement";
-import {Container} from "react-bootstrap";
 
 interface CanvasProps {
     data: UiElement;
@@ -36,20 +35,18 @@ export const Canvas: FC<CanvasProps> = ({data}) => {
     }, [lines]);
 
     return (
-        <Container style={{width: '100%', overflow: 'scroll'}}>
-            <canvas
-                id="canvas"
-                width={CANVAS.WIDTH}
-                height={CANVAS.HEIGHT}
-                style={{
-                    height: '100%',
-                    minHeight: '500px',
-                    width: '100%',
-                    minWidth: '700px',
-                    display: 'block'
+        <canvas
+            id="canvas"
+            width={CANVAS.WIDTH}
+            height={CANVAS.HEIGHT}
+            style={{
+                height: '100%',
+                minHeight: '500px',
+                width: '100%',
+                minWidth: '700px',
+                display: 'block'
             }}
-            >
-            </canvas>
-        </Container>
+        >
+        </canvas>
     );
 };

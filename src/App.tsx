@@ -1,4 +1,4 @@
-import {useContext} from "react";
+import React, {useContext} from "react";
 import {BarForm} from "./components/forms/bar.form";
 import {ForceForm} from "./components/forms/force.form";
 import {ForceList} from "./components/list/force.list";
@@ -6,7 +6,6 @@ import {LoadForm} from "./components/forms/load.form";
 import {LoadList} from "./components/list/load.list";
 import {MomentForm} from "./components/forms/moment.form";
 import {MomentList} from "./components/list/moment.list";
-import {Situation} from "./components/situation";
 import {SupportForm} from "./components/forms/support.form";
 import {SupportList} from "./components/list/support.list";
 import {SituationContext} from "./context/situation.context";
@@ -14,6 +13,7 @@ import {Load as LoadType} from "./types/load";
 import LeftSidebar from "./components/left.sidebar";
 import RightSidebar from "./components/right.sidebar";
 import {SupportReaction} from "./utils/supportReaction";
+import Content from "./components/content";
 
 export const App = () => {
     const {
@@ -33,7 +33,7 @@ export const App = () => {
         removeLoad
     } = useContext(SituationContext);
 
-    console.log(SupportReaction.getSupportReaction(forces, supports));
+    const formula = SupportReaction.getSupportReaction(forces, supports);
 
     return (
         <section className="d-flex h-100 vh-100" style={{transition: 'all 1s'}}>
@@ -63,7 +63,7 @@ export const App = () => {
             </LeftSidebar>
 
             <main className="d-flex w-100 position-relative">
-                <Situation/>
+                <Content formula={formula}/>
                 <RightSidebar title={'Cargas e Reações'}>
                     <ForceList forces={forces} onRemove={removeForce}/>
                     <SupportList supports={supports} onRemove={removeSupport}/>
@@ -71,11 +71,6 @@ export const App = () => {
                     <LoadList loads={loads} remove={removeLoad}/>
                 </RightSidebar>
             </main>
-
-            {/*<RightSidebar title={''}>*/}
-
-            {/*</RightSidebar>*/}
-
         </section>
     );
 };

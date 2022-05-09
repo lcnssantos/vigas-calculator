@@ -8,7 +8,7 @@
 | Leticia Silva Lopes       | 821132168 |
 | Luciano Santos            | 819120717 |
 | Matheus Mariano Poda      | 821132252 |
-| Ramirez Soares Lima       | 82113126  |
+| Ramirez Soares Lima       | 821132126 |
 
 
 ## Vigas Calculator

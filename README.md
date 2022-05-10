@@ -31,6 +31,9 @@ Fluxo calculo de momentos e forças
 > Resultado em tela:
 > ![calculo-em-maos](./file/calculo-somatorio-de-forcas-resultado.png)
 
+> 10/05/2022 - Sentido das compoenetes forças
+> ![circulo](./file/sentido-forças.png)
+
 ### Conclusão
 
 ### Referências

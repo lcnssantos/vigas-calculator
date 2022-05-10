@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
-import { CANVAS } from "../constants";
-import { CanvasDraw } from "../ui/CanvasDraw";
-import { UiElement } from "../ui/uiElement";
+import { CANVAS } from "../../constants";
+import { CanvasDraw } from "../../ui/CanvasDraw";
+import { UiElement } from "../../ui/uiElement";
 
 interface CanvasProps {
   data: UiElement;

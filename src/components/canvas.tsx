@@ -44,6 +44,7 @@ export const Canvas: FC<CanvasProps> = ({ data }) => {
         minHeight: "500px",
         width: "100%",
         minWidth: "700px",
+        maxWidth: "1800px",
         display: "block",
       }}
     ></canvas>

@@ -27,10 +27,10 @@ export class MathCalc {
   }
 
   static decodeSingleForce(intensity: number | undefined, angle: number) {
-    const { cos, sin } = Calc.getCosSinTan(angle);
+    const {cos, sin} = Calc.getCosSinTan(angle);
 
-    const fx: number | undefined = intensity ? Math.abs(Math.round(intensity * sin * 10) / 10) : undefined;
-    const fy: number | undefined = intensity ? Math.abs(Math.round(intensity * cos * 10) / 10) : undefined;
+    const fx: number = intensity ? Math.abs(Math.round(intensity * sin * 10) / 10) : 0;
+    const fy: number = intensity ? Math.abs(Math.round(intensity * cos * 10) / 10) : 0;
 
     return [fx, fy];
   }

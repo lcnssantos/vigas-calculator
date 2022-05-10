@@ -6,7 +6,7 @@ import { Situation } from "./situation";
 
 export const Content: React.FC<Formulas> = ({ formula }) => {
   return (
-    <Container style={{ width: "100%", height: "100%", overflow: "scroll" }}>
+    <Container style={{ minWidth: "88%", height: "100%", overflow: "scroll", margin: 0 }}>
       <Situation />
       <FormulaBox formula={formula} />
     </Container>

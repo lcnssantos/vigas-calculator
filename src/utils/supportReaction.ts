@@ -1,11 +1,20 @@
 import {Force} from "../types/force";
 import {Support, SupportType} from "../types/support";
-import {Formula} from "./formula";
+import {Formula} from "../types/formula";
+import {Load} from "../types/load";
 
 export class SupportReaction {
-    static getSupportReaction(forces: Array<Force>, supports: Array<Support>) {
+    static getSupportReaction(forces: Array<Force>, supports: Array<Support>, loads: Array<Load>) {
         let [yForceResult, xForceResult] = [0, 0];
         const [ySupports, xSupports] = [new Array<Support>(), new Array<Support>()];
+
+        // Calculando forças resultante nos dois eixos
+        loads.forEach((load) => {
+            load.resultForces.forEach((force) => {
+                xForceResult += force.XComponent || 0;
+                yForceResult += force.YComponent || 0;
+            });
+        });
 
         forces.forEach((force) => {
             xForceResult += force.XComponent || 0;
@@ -45,8 +54,8 @@ export class SupportReaction {
             });
         }
 
-        const sumXFormula: string = `∑Fx = ${xSupportsText} - ${xForceResult}`;
-        const sumYFormula: string = `∑Fy = ${ySupportsText} - ${yForceResult}`;
+        const sumXFormula: string = `∑Fx = ${xSupportsText} - ( ${xForceResult} ) = 0`;
+        const sumYFormula: string = `∑Fy = ${ySupportsText} - ( ${yForceResult} ) = 0`;
 
         return new Formula(sumXFormula, sumYFormula, undefined);
     }

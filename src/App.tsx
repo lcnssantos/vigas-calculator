@@ -33,7 +33,8 @@ export const App = () => {
         removeLoad
     } = useContext(SituationContext);
 
-    const formula = SupportReaction.getSupportReaction(forces, supports);
+    console.log(loads, forces);
+    const formula = SupportReaction.getSupportReaction(forces, supports, loads);
 
     return (
         <section className="d-flex h-100 vh-100" style={{transition: 'all 1s'}}>
@@ -71,6 +72,7 @@ export const App = () => {
                     <LoadList loads={loads} remove={removeLoad}/>
                 </RightSidebar>
             </main>
+            <div></div>
         </section>
     );
 };

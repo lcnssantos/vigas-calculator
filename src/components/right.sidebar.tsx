@@ -7,11 +7,12 @@ export const RightSidebar: React.FC<Props> = ({title, children}) => {
 
     return (
         <Container style={{
+            margin: 0,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             overflowY: 'scroll',
-            width: '17%',
+            width: '12%',
             backgroundColor: '#e9ecef'
         }}>
             <h4 style={{margin: '6px 0 0 12px', fontWeight: '600', fontSize: '1.1rem'}}>{title}</h4>

@@ -1,4 +1,4 @@
-import {Formula} from "../utils/formula";
+import {Formula} from "./formula";
 
 export type Props = {
     title: string,

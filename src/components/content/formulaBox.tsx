@@ -1,6 +1,6 @@
 import {Card} from "react-bootstrap";
 import React from "react";
-import {Formulas} from "../types/props";
+import {Formulas} from "../../types/props";
 
 export const FormulaBox: React.FC<Formulas> = ({formula}) => {
     return (

@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { SituationContext } from "../context/situation.context";
-import { Force } from "../types/force";
-import { Moment } from "../types/moment";
-import { CanvasUiElements } from "../ui/CanvasUiElements";
-import { UiElement } from "../ui/uiElement";
+import { SituationContext } from "../../context/situation.context";
+import { Force } from "../../types/force";
+import { Moment } from "../../types/moment";
+import { CanvasUiElements } from "../../ui/CanvasUiElements";
+import { UiElement } from "../../ui/uiElement";
 import { Canvas } from "./canvas";
 
 export const Situation = () => {

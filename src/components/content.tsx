@@ -1,12 +1,28 @@
 import React from "react";
 import {Container} from "react-bootstrap";
-import {Formulas} from "../types/props";
 import {Situation} from "./content/situation";
 import Panel from "./content/panel";
+import {Formula} from "../types/formula";
 
-export const Content: React.FC<Formulas> = ({formula}) => {
+export type Props = {
+    formula: Formula,
+    width: number
+}
+
+export const Content: React.FC<Props> = ({formula, width}) => {
+    let contentStyle = {
+        minWidth: "88%",
+        height: "100%",
+        overflow: "scroll",
+        margin: 0
+    } as React.CSSProperties;
+
+    if (width < 1100) {
+        contentStyle.minWidth = "100%";
+    }
+
     return (
-        <Container style={{minWidth: "88%", height: "100%", overflow: "scroll", margin: 0}}>
+        <Container style={contentStyle}>
             <Situation/>
             <Panel formula={formula}/>
         </Container>

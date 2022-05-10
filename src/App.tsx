@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useLayoutEffect, useState} from "react";
 import {BarForm} from "./components/forms/bar.form";
 import {ForceForm} from "./components/forms/force.form";
 import {ForceList} from "./components/list/force.list";
@@ -15,7 +15,24 @@ import RightSidebar from "./components/right.sidebar";
 import {SupportReaction} from "./utils/supportReaction";
 import Content from "./components/content";
 
+function useWindowSize() {
+    const [size, setSize] = useState([0, 0]);
+    useLayoutEffect(() => {
+        function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+        }
+
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+}
+
 export const App = () => {
+
+    const [width] = useWindowSize();
+
     const {
         setLength,
         addForce,
@@ -33,7 +50,6 @@ export const App = () => {
         removeLoad
     } = useContext(SituationContext);
 
-    console.log(loads, forces);
     const formula = SupportReaction.getSupportReaction(forces, supports, loads);
 
     return (
@@ -64,15 +80,14 @@ export const App = () => {
             </LeftSidebar>
 
             <main className="d-flex w-100 position-relative">
-                <Content formula={formula}/>
-                <RightSidebar title={'Cargas e Reações'}>
+                <Content formula={formula} width={width}/>
+                <RightSidebar title={'Cargas e Reações'} width={width}>
                     <ForceList forces={forces} onRemove={removeForce}/>
                     <SupportList supports={supports} onRemove={removeSupport}/>
                     <MomentList moments={moments} onRemove={removeMoment}/>
                     <LoadList loads={loads} remove={removeLoad}/>
                 </RightSidebar>
             </main>
-            <div></div>
         </section>
     );
 };

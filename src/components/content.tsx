@@ -17,8 +17,8 @@ export const Content: React.FC<Props> = ({formula, width}) => {
         margin: 0
     } as React.CSSProperties;
 
-    if (width < 1100) {
-        contentStyle.minWidth = "100%";
+    if (width < 900) {
+        contentStyle.width = "100%";
     }
 
     return (

@@ -79,7 +79,8 @@ export const App = () => {
                 />
             </LeftSidebar>
 
-            <main className="d-flex w-100 position-relative">
+            <main className="d-flex w-100 position-relative justify-content-center"
+                  style={{transition: 'all 0.5s ease-in'}}>
                 <Content formula={formula} width={width}/>
                 <RightSidebar title={'Cargas e Reações'} width={width}>
                     <ForceList forces={forces} onRemove={removeForce}/>

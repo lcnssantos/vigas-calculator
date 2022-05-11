@@ -1,4 +1,4 @@
-import {FC, useEffect} from "react";
+import React, {FC, useEffect} from "react";
 import {CANVAS} from "../../constants";
 import {CanvasDraw} from "../../ui/CanvasDraw";
 import {UiElement} from "../../ui/uiElement";
@@ -35,20 +35,27 @@ export const Canvas: FC<CanvasProps> = ({data}) => {
         }
     }, [lines]);
 
+    const boxStyle = {
+        overflowX: 'auto',
+        margin: '0 auto'
+    } as React.CSSProperties;
+
+    const canvasStyle = {
+        height: "100%",
+        minHeight: "500px",
+        width: "100%",
+        minWidth: "700px",
+        maxWidth: "1800px",
+        display: "block",
+    } as React.CSSProperties;
+
     return (
-        <Container style={{overflowX: 'auto', margin: '0 auto'}}>
+        <Container style={boxStyle}>
             <canvas
                 id="canvas"
                 width={CANVAS.WIDTH}
                 height={CANVAS.HEIGHT}
-                style={{
-                    height: "100%",
-                    minHeight: "500px",
-                    width: "100%",
-                    minWidth: "700px",
-                    maxWidth: "1800px",
-                    display: "block",
-                }}
+                style={canvasStyle}
             ></canvas>
         </Container>
     );

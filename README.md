@@ -34,6 +34,9 @@ Fluxo calculo de momentos e forças
 > 10/05/2022 - Sentido das compoenetes forças
 > ![circulo](./file/sentido-forças.png)
 
+> 11/05/2022 - Adicionado responsividade e gráfico
+> ![responsividade](./file/desing-responsivo.png)
+
 ### Conclusão
 
 ### Referências

@@ -3,6 +3,7 @@ import { Container, Tab, Tabs } from "react-bootstrap";
 import { SituationContext } from "../context/situation.context";
 import { Situation } from "../types/situation";
 import { EquationUtil } from "../utils/equation";
+import { DoubleLinearSystem } from "../utils/math";
 import Chart from "./chart";
 import { Formula, FormulaCard } from "./formula_card";
 
@@ -14,25 +15,58 @@ const Panel = () => {
 
   useEffect(() => {
     const situation = new Situation(length, supports, forces, moments, loads);
+
     const { x: horizontalForces, y: verticalForces } =
       situation.getDecodedForces();
+
+    const decodedMoments = situation.getDecodedMoments();
+
+    const { latex: horizontalLatex } =
+      EquationUtil.getHorizontal(horizontalForces);
+
+    const {
+      latex: verticalLatex,
+      equation: verticalEquation,
+      unknow,
+    } = EquationUtil.getVertical(verticalForces);
+
+    const { latex: momentLatex, equation: momentEquation } =
+      EquationUtil.getMoments(decodedMoments);
+
     const tempFormulas = [];
 
     if (horizontalForces.length > 0) {
-      const { latex } = EquationUtil.getHorizontal(horizontalForces);
-
       tempFormulas.push({
         title: "Somatória forças em X",
-        code: latex,
+        code: horizontalLatex,
       });
     }
 
     if (verticalForces.length > 0) {
-      const { latex } = EquationUtil.getVertical(verticalForces);
-
       tempFormulas.push({
         title: "Somatória forças em y",
-        code: latex,
+        code: verticalLatex,
+      });
+    }
+
+    if (decodedMoments.length > 0) {
+      tempFormulas.push({
+        title: "Somatória momentos",
+        code: momentLatex,
+      });
+    }
+
+    if (unknow.length === 2) {
+      const system = new DoubleLinearSystem(verticalEquation, momentEquation);
+      const solution = system.solve();
+
+      tempFormulas.push({
+        title: "Solução",
+        code: `$ ${unknow[0].id.split("").join("_")} = ${
+          solution.x
+        } \\:\\:\\:\\:\\:\\: |\\:\\:\\:\\:\\:\\: ${unknow[1].id
+          .split("")
+          .join("_")} = ${solution.y} $`,
       });
     }
 

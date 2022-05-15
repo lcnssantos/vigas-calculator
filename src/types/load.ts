@@ -27,13 +27,13 @@ export class Load {
     if (this.finalValue === this.initialValue) {
       const force = new Force(
         this.id,
-        this.finalValue * this.size,
-        0,
+        Math.abs(this.finalValue) * this.size,
+        this.finalValue > 0 ? 0 : 180,
         (this.finalPosition + this.initialPosition) / 2
       );
       this.forces.push(force);
     } else {
-      if (this.initialValue > 0) {
+      if (Math.abs(this.initialValue) > 0) {
         const force = new Force(
           this.id + "1",
           Math.min(this.initialValue, this.finalValue) * this.size,
@@ -46,8 +46,8 @@ export class Load {
 
       const force = new Force(
         this.id + (this.forces.length + 1).toString(),
-        Math.abs(this.finalValue - this.initialValue) * this.size,
-        0,
+        (Math.abs(this.finalValue - this.initialValue) * this.size) / 2,
+        this.finalValue - this.initialValue > 0 ? 0 : 180,
         this.initialPosition +
           this.size * (this.finalValue > this.initialValue ? 2 / 3 : 1 / 3)
       );

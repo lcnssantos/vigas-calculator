@@ -7,7 +7,7 @@ export class Load {
   initialPosition: number;
   finalPosition: number;
   private size: number;
-  resultForces: Array<Force>;
+  forces: Array<Force>;
 
   constructor(
     id: string,
@@ -21,7 +21,7 @@ export class Load {
     this.finalValue = finalValue;
     this.finalPosition = finalPosition;
     this.initialValue = initialValue;
-    this.resultForces = [];
+    this.forces = [];
     this.size = Math.abs(this.finalPosition - this.initialPosition);
 
     if (this.finalValue === this.initialValue) {
@@ -31,7 +31,7 @@ export class Load {
         0,
         (this.finalPosition + this.initialPosition) / 2
       );
-      this.resultForces.push(force);
+      this.forces.push(force);
     } else {
       if (this.initialValue > 0) {
         const force = new Force(
@@ -41,18 +41,18 @@ export class Load {
           (this.finalPosition + this.initialPosition) / 2
         );
 
-        this.resultForces.push(force);
+        this.forces.push(force);
       }
 
       const force = new Force(
-        this.id + (this.resultForces.length + 1).toString(),
+        this.id + (this.forces.length + 1).toString(),
         Math.abs(this.finalValue - this.initialValue) * this.size,
         0,
         this.initialPosition +
           this.size * (this.finalValue > this.initialValue ? 2 / 3 : 1 / 3)
       );
 
-      this.resultForces.push(force);
+      this.forces.push(force);
     }
   }
 }

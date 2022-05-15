@@ -1,6 +1,5 @@
 import { createContext, FunctionComponent, useEffect, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
-import { MathCalc } from "../math";
 import { Force } from "../types/force";
 import { Load } from "../types/load";
 import { Moment } from "../types/moment";
@@ -15,7 +14,6 @@ import {
 interface Situation {
   length: number;
   forces: Array<Force>;
-  decodedForces: Array<Force>;
   supports: Array<Support>;
   moments: Array<Moment>;
   loads: Array<Load>;
@@ -32,9 +30,8 @@ interface Situation {
 }
 
 export const SituationContext = createContext<Situation>({
-  forces: [],
-  decodedForces: [],
   length: 0,
+  forces: [],
   supports: [],
   moments: [],
   loads: [],
@@ -47,11 +44,10 @@ export const SituationContext = createContext<Situation>({
   addMoment: () => {},
   removeMoment: () => {},
   addLoad: () => {},
-  removeLoad: () => {}
+  removeLoad: () => {},
 });
 
 export const SituationProvider: FunctionComponent = ({ children }) => {
-
   const [forces, setForces] = useLocalStorageState<Array<Force>>("forces", {
     defaultValue: [],
   });
@@ -73,7 +69,6 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
     defaultValue: [],
   });
 
-  const [decodedForces, setDecodedForces] = useState<Array<Force>>([]);
   const [positions, setPositions] = useState<Array<number>>([]);
 
   const removeElementById = (id: string) => {
@@ -130,32 +125,13 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
     setLoads(loads.filter((load) => load.id !== id));
   };
 
-  const getDecodedForces = (forces: Array<Force>) =>
-    forces
-      .map((force) => {
-        if ([0, 90, 180, 270].includes(force.angle)) {
-          return [];
-        }
-        const { fx, fy } = MathCalc.decodeForce(force);
-        return [fx, fy];
-      })
-      .reduce((out, forceList) => [...out, ...forceList], []);
-
-  useEffect(() => {
-    setDecodedForces([
-      ...getDecodedForces(forces),
-      ...supports.map((s) => s.forces).reduce((o, f) => [...o, ...f], []),
-      ...loads.map((l) => l.resultForces).reduce((o, f) => [...o, ...f], []),
-    ]);
-  }, [forces, supports, loads, moments]);
-
   useEffect(() => {
     const newPositions: Array<number> = [0];
 
     loads.forEach((l) => {
       newPositions.push(l.initialPosition);
       newPositions.push(l.finalPosition);
-      l.resultForces.forEach((f) => newPositions.push(f.position));
+      l.forces.forEach((f) => newPositions.push(f.position));
     });
 
     moments.forEach((m) => newPositions.push(m.position));
@@ -175,7 +151,6 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
         removeForce,
         removeSupport,
         setLength,
-        decodedForces,
         addSupport,
         supports,
         addMoment,
@@ -183,7 +158,7 @@ export const SituationProvider: FunctionComponent = ({ children }) => {
         moments,
         addLoad,
         loads,
-        removeLoad
+        removeLoad,
       }}
     >
       {children}

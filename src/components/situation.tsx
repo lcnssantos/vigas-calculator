@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { SituationContext } from "../../context/situation.context";
-import { Force } from "../../types/force";
-import { Moment } from "../../types/moment";
-import { CanvasUiElements } from "../../ui/CanvasUiElements";
-import { UiElement } from "../../ui/uiElement";
+import { SituationContext } from "../context/situation.context";
+import { Force } from "../types/force";
+import { Moment } from "../types/moment";
+import { Situation as SituationType } from "../types/situation";
+import { CanvasUiElements } from "../ui/CanvasUiElements";
+import { UiElement } from "../ui/uiElement";
 import { Canvas } from "./canvas";
 
 export const Situation = () => {
-  const { forces, length, decodedForces, supports, moments, loads, positions } =
+  const { forces, length, supports, moments, loads, positions } =
     useContext(SituationContext);
 
   const [data, setData] = useState<UiElement>({
@@ -84,8 +85,15 @@ export const Situation = () => {
       return;
     }
 
+    const situation = new SituationType(
+      length,
+      supports,
+      forces,
+      moments,
+      loads
+    );
+
     const baseUi = processBase();
-    const decodedforcesUi = processForces(decodedForces, "blue");
     const supportsUi = processSupports();
     const momentsUi = processMoments(moments, "brown");
     const supportMomentsUi = processMoments(
@@ -95,20 +103,24 @@ export const Situation = () => {
     const loadsUi = processLoads();
     const positionsUi = processPositions(positions);
     const forcesUi = processForces(forces, "green");
+    const decodedForcesUi = processForces(
+      situation.getDecodedForces().total,
+      "blue"
+    );
 
     setData(
       concatUiElements([
         baseUi,
-        decodedforcesUi,
         supportsUi,
         momentsUi,
         loadsUi,
         positionsUi,
         forcesUi,
         supportMomentsUi,
+        decodedForcesUi,
       ])
     );
-  }, [forces, length, decodedForces, supports, moments, loads]);
+  }, [forces, length, supports, moments, loads]);
 
   return <Canvas data={data} />;
 };

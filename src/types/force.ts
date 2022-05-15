@@ -1,44 +1,8 @@
-import { Moment } from "./moment";
-import {MathCalc} from "../math";
-
 export class Force {
-  id: string;
-  intensity: number | undefined;
-  XComponent: number | undefined;
-  YComponent: number | undefined;
-  angle: number;
-  position: number;
-  moment: Moment | undefined;
-
   constructor(
-    id: string,
-    intensity: number | undefined,
-    angle: number,
-    position: number
-  ) {
-    this.id = id;
-    this.intensity = intensity;
-    this.angle = angle;
-    this.position = position;
-    [this.XComponent, this.YComponent] = MathCalc.decodeSingleForce(intensity, angle);
-    this.checkForceSignal();
-  }
-
-    /** Método que adiciona a direção (+ ou -) ao componente da força de acordo com o ângulo
-     * Leste → e Norte ↑ positivo, Oeste ← e Sul ↓ negativo */
-    private checkForceSignal(): void {
-        const angleDivisionResult: number = this.angle % 360;
-        let [XSignal, YSignal] = [1, 1];
-
-        if (angleDivisionResult > 90 && angleDivisionResult <= 180) {
-            [XSignal, YSignal] = [1, -1];
-        } else if (angleDivisionResult > 180 && angleDivisionResult <= 270) {
-            [XSignal, YSignal] = [-1, -1];
-        } else if (angleDivisionResult > 270 && angleDivisionResult <= 360) {
-            [XSignal, YSignal] = [-1, 1];
-        }
-
-        this.XComponent = this.XComponent ? this.XComponent * XSignal : undefined;
-        this.YComponent = this.YComponent ? this.YComponent * YSignal : undefined;
-    }
+    public id: string,
+    public intensity: number | undefined,
+    public angle: number,
+    public position: number
+  ) {}
 }

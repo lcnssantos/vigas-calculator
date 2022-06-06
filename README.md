@@ -11,6 +11,10 @@
 | Matheus Mariano Poda                 | 821132252 |
 | Ramirez Soares Lima                  | 821132126 |
 | Nathália Cristina de Oliveira Bastos | 822160984 |
+| Thuane David Cunha                   | 821132193 |
+
+
+Link Aplicação: https://mecsol-a3.netlify.app/
 
 ## Vigas Calculator
 

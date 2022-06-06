@@ -6,7 +6,7 @@ export class Load {
   finalValue: number;
   initialPosition: number;
   finalPosition: number;
-  private size: number;
+  private size?: number;
   forces: Array<Force>;
 
   constructor(

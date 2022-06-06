@@ -4,7 +4,6 @@ import { SituationContext } from "../context/situation.context";
 import { Situation } from "../types/situation";
 import { EquationUtil } from "../utils/equation";
 import { DoubleLinearSystem } from "../utils/math";
-import Chart from "./chart";
 import { Formula, FormulaCard } from "./formula_card";
 
 const Panel = () => {
@@ -102,9 +101,11 @@ const Panel = () => {
           hi
         </PanelTab>
 
-        <PanelTab eventKey="diagram" title="Diagramas" disabled={false}>
-          <Chart />
-        </PanelTab>
+        <PanelTab
+          eventKey="diagram"
+          title="Diagramas"
+          disabled={false}
+        ></PanelTab>
       </Tabs>
     </Container>
   );

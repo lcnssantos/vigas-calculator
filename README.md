@@ -1,21 +1,5 @@
 # Resistência dos materiais e elementos de máquinas - 2022.1
 
-## Trabalho A3 - Universidade São judas Tadeu
-
-| Alunos                               | RA        |
-| ------------------------------------ | --------- |
-| Felipe Rocha                         | 819166993 |
-| Leonardo Oliveira Freitas            | 819143458 |
-| Leticia Silva Lopes                  | 821132168 |
-| Luciano Santos                       | 819120717 |
-| Matheus Mariano Poda                 | 821132252 |
-| Ramirez Soares Lima                  | 821132126 |
-| Nathália Cristina de Oliveira Bastos | 822160984 |
-| Thuane David Cunha                   | 821132193 |
-
-
-Link Aplicação: https://mecsol-a3.netlify.app/
-
 ## Vigas Calculator
 
 Vigas calculator é um software de simulação esforços físicos exercídos sobre uma viga. Tendo como objetivo
